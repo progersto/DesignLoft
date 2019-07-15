@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:tools="http://schemas.android.com/tools"
+      xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+            android:id="@+id/menu_contacts"
+            android:icon="@drawable/ic_phone_gray"
+            tools:ignore="MenuTitle"/>
+
+    <item
+            android:id="@+id/menu_catalog"
+            android:icon="@drawable/ic_calalog_gray"
+            tools:ignore="MenuTitle"/>
+
+    <item
+            android:id="@+id/menu_profile"
+            android:icon="@drawable/ic_profile_gray"
+            tools:ignore="MenuTitle"/>
+</menu>
