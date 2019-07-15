@@ -1,4 +1,4 @@
-package com.designloft.ui.catalog
+package com.designloft.ui.ar
 
 import android.view.LayoutInflater
 import android.view.View

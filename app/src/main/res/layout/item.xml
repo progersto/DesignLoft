@@ -10,7 +10,7 @@
             android:id="@+id/name_item"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-         android:paddingBottom="10dp"
+            android:paddingBottom="10dp"
             android:paddingTop="10dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

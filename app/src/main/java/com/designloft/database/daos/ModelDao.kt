@@ -1,26 +1,26 @@
 package com.designloft.database.daos
 
 import androidx.room.*
-import com.designloft.database.entities.Model
+import com.designloft.database.entities.CatalogItem
 
 @Dao
 interface ModelDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg model: Model)
+    fun insert(vararg catalogItem: CatalogItem)
 
-    @Query("select * from Model where type = 2 and parentFolderId is :parentFolderId")
-    fun getImageList(parentFolderId: Int?): List<Model>
+    @Query("select * from CatalogItem")
+    fun getItemList(): MutableList<CatalogItem>
 
-    @Query("select * from Model where type = 1 and parentFolderId is :parentFolderId")
-    fun getFolderList(parentFolderId: Int?): List<Model>
+//    @Query("select * from CatalogItem where type = 1 and parentFolderId is :parentFolderId")
+//    fun getFolderList(parentFolderId: Int?): List<CatalogItem>
 
     @Update
-    fun updateModel(model: Model)
-//    @Query("UPDATE Model set name =:id where id =:id")
+    fun updateModel(catalogItem: CatalogItem)
+//    @Query("UPDATE CatalogItem set name =:id where id =:id")
 //    fun updateModel(id: Int)
 
-    @Query("DELETE from Model where id =:id or parentFolderId =:id")
-    fun delete(id: Int)
+//    @Query("DELETE from CatalogItem where id =:id or parentFolderId =:id")
+//    fun delete(id: Int)
 
 }//FileDataDao
