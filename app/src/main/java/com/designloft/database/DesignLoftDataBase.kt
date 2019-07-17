@@ -2,14 +2,17 @@ package com.designloft.database
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.designloft.database.daos.ModelDao
-import com.designloft.database.entities.CatalogItem
+import com.designloft.database.daos.CategoriesDao
+import com.designloft.database.daos.ProductsDao
+import com.designloft.database.entities.CategoryItem
+import com.designloft.database.entities.ProductItem
 
 @Database(
     entities = [
-        CatalogItem::class
+        CategoryItem::class, ProductItem::class
     ], version = 1, exportSchema = false
 )
 abstract class DesignLoftDataBase : RoomDatabase() {
-    abstract fun getModelDao(): ModelDao
+    abstract fun getCategoriesDao(): CategoriesDao
+    abstract fun getProductsDao(): ProductsDao
 }

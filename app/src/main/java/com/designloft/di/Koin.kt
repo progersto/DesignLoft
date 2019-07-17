@@ -32,9 +32,10 @@ private val dataModule = module {
     single { get<Context>().defaultSharedPreferences }
     single { PreferencesManager(get()) }
     single { MainDataManager(get(), get()) }
-    single { ModelRepository(get(), get()) }
+    single { ModelRepository(get(), get(), get()) }
     single { Room.databaseBuilder(get(), DesignLoftDataBase::class.java, "data_base").build() }
-    single { get<DesignLoftDataBase>().getModelDao() }
+    single { get<DesignLoftDataBase>().getCategoriesDao() }
+    single { get<DesignLoftDataBase>().getProductsDao() }
 }
 
 val appModules  = mutableListOf(viewModelModule, networkModule, dataModule)

@@ -1,9 +1,13 @@
 package com.designloft.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import android.view.MenuItem
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Observer
 import com.designloft.R
 import com.designloft.base.BaseActivity
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -17,8 +21,7 @@ class MainActivity  : BaseActivity()  {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        viewModel.initCategoryList()
-
+        viewModel.initDB()
 
         bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
         bottom_navigation.selectedItemId = R.id.menu_catalog
@@ -32,8 +35,8 @@ class MainActivity  : BaseActivity()  {
                     return true
                 }
                R.id.menu_catalog -> {
-                    replaceFragmentWithoutBackstack(CatalogFragment.newInstance())
-                    return true
+                   replaceFragmentWithoutBackstack(CategoriesFragment.newInstance())
+                   return true
                 }
                R.id.menu_profile -> {
                     replaceFragmentWithoutBackstack(ProfileFragment.newInstance())
@@ -44,4 +47,11 @@ class MainActivity  : BaseActivity()  {
         }
     }
 
+    override fun onBackPressed() {
+        val fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.container)
+        if (fragment is ProfileFragment) {
+            finish()
+        }
+        super.onBackPressed()
+    }
 }

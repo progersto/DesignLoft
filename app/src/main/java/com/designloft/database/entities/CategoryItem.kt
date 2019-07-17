@@ -4,8 +4,8 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-@Entity(tableName = "CatalogItem")
-class CatalogItem(
+@Entity(tableName = "CategoryItem")
+class CategoryItem(
     @PrimaryKey(autoGenerate = true)
     val id: Int?,
 
