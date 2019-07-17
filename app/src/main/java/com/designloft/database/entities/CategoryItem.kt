@@ -14,5 +14,4 @@ class CategoryItem(
 
     @ColumnInfo(name = "image")
     var image: String = ""
-
 )

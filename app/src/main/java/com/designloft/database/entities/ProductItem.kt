@@ -21,6 +21,9 @@ class ProductItem(
     @ColumnInfo(name = "favorite")
     var favorite: Boolean = false,
 
+    @ColumnInfo(name = "sale")
+    var sale: Boolean = false,
+
     @ColumnInfo(name = "category_id")
     var categoryId: Int = 0
 

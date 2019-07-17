@@ -1,4 +1,4 @@
-package com.designloft.ui.main
+package com.designloft.ui.main.categories
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.database.entities.CategoryItem
+import com.designloft.ui.main.MainViewModel
+import com.designloft.ui.main.categories.product.ProductsFragment
 import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -35,10 +37,6 @@ class CategoriesFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        viewModel.categories.value?.apply {
-            viewModel.getAllCategory()
-        }
-
         text_toolbar.text = resources.getString(R.string.app_name)
 
         val options = RequestOptions()
@@ -48,7 +46,7 @@ class CategoriesFragment : BaseFragment() {
             .error(R.drawable.no_image)
 
         categoriesAdapter = CategoriesAdapter(options) { category ->
-            showFragment(ProductsFragment.newInstance(category.name))
+            showFragment(ProductsFragment.newInstance(category.name, category.id!!))
         }
         catalog_adapter.adapter = categoriesAdapter
 
@@ -60,7 +58,4 @@ class CategoriesFragment : BaseFragment() {
             }
         })
     }
-//        auth_login_btn.setOnClickListener {
-//            viewModel.showLogin.call()
-//        }
 }

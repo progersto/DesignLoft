@@ -1,4 +1,4 @@
-package com.designloft.ui.main
+package com.designloft.ui.main.categories
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -27,7 +27,8 @@ class CategoriesAdapter (private val options: RequestOptions, private val clickL
         context = parent.context
         return CatalogViewHolder(
             LayoutInflater.from(context).inflate(R.layout.item_category, parent, false)
-            , options)
+            , options
+        )
     }
 
     override fun getItemCount(): Int = list.size

@@ -1,21 +1,17 @@
 package com.designloft.ui.main
 
 import android.os.Bundle
-import android.util.Log
 import kotlinx.android.synthetic.main.activity_main.*
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import android.view.MenuItem
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Observer
 import com.designloft.R
 import com.designloft.base.BaseActivity
+import com.designloft.ui.main.profile.ProfileFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
-class MainActivity  : BaseActivity()  {
+class MainActivity : BaseActivity() {
 
     private val viewModel by viewModel<MainViewModel>()
+    private var navigationAdapter: NavigationAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -23,32 +19,30 @@ class MainActivity  : BaseActivity()  {
 
         viewModel.initDB()
 
-        bottom_navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener)
+        navigationAdapter = NavigationAdapter(supportFragmentManager)
+        navigation_view_pager.adapter = navigationAdapter
+        navigation_view_pager.offscreenPageLimit = 2
+
+        configureBottomNavigationView()
+    }
+
+    // Set bottom navigation buttons
+    private fun configureBottomNavigationView() {
+        bottom_navigation.setOnNavigationItemSelectedListener {
+            // The 3 fragments
+            when (it.itemId) {
+                R.id.menu_contacts -> navigation_view_pager.currentItem = 0
+                R.id.menu_catalog -> navigation_view_pager.currentItem = 1
+                R.id.menu_profile -> navigation_view_pager.currentItem = 2
+            }
+            true
+        }
+        // Set default fragment selected
         bottom_navigation.selectedItemId = R.id.menu_catalog
     }
 
-    private val mOnNavigationItemSelectedListener = object : BottomNavigationView.OnNavigationItemSelectedListener {
-        override fun onNavigationItemSelected(item: MenuItem): Boolean {
-            when (item.itemId) {
-                R.id.menu_contacts -> {
-                    replaceFragmentWithoutBackstack(ContactsFragment.newInstance())
-                    return true
-                }
-               R.id.menu_catalog -> {
-                   replaceFragmentWithoutBackstack(CategoriesFragment.newInstance())
-                   return true
-                }
-               R.id.menu_profile -> {
-                    replaceFragmentWithoutBackstack(ProfileFragment.newInstance())
-                    return true
-                }
-            }
-            return false
-        }
-    }
-
     override fun onBackPressed() {
-        val fragment : Fragment? = supportFragmentManager.findFragmentById(R.id.container)
+        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.container)
         if (fragment is ProfileFragment) {
             finish()
         }

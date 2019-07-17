@@ -1,4 +1,6 @@
 <resources>
     <string name="app_name">DesignLoft</string>
     <string name="contacts_toolbar">Контакты</string>
+    <string name="favorite">Избранное</string>
+    <string name="my_design">Мой дизайн</string>
 </resources>

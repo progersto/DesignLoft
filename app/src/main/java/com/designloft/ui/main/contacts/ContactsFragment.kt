@@ -1,4 +1,4 @@
-package com.designloft.ui.main
+package com.designloft.ui.main.contacts
 
 import android.os.Bundle
 import android.view.LayoutInflater

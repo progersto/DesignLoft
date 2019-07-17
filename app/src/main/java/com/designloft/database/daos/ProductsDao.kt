@@ -7,7 +7,7 @@ import com.designloft.database.entities.ProductItem
 interface ProductsDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insert(vararg categoryItem: ProductItem)
+    fun insert(vararg productItem: ProductItem)
 
     @Query("select * from ProductItem")
     fun getItemList(): MutableList<ProductItem>
@@ -16,7 +16,7 @@ interface ProductsDao {
 //    fun getFolderList(parentFolderId: Int?): List<CategoryItem>
 
     @Update
-    fun updateModel(categoryItem: ProductItem)
+    fun updateModel(productItem: ProductItem)
 //    @Query("UPDATE ProductItem set name =:id where id =:id")
 //    fun updateModel(id: Int)
 
