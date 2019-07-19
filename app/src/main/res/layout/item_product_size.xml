@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content">
+
+    <TextView
+            android:id="@+id/fragment_product_size_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="71.1"
+            android:textSize="18sp"
+            android:layout_gravity="center"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/black"
+    />
+
+    <TextView
+            android:id="@+id/fragment_product_size_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="высота"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+    />
+
+</LinearLayout>
