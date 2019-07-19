@@ -10,7 +10,7 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
-import com.designloft.database.entities.MyDesignItem
+import com.designloft.database.entities.MyDesignEntity
 import kotlinx.android.synthetic.main.item_my_design.view.*
 import java.util.ArrayList
 
@@ -19,7 +19,7 @@ class MyDesignAdapter (
     private val myDesignListener: MyDesignListener
 ) : RecyclerView.Adapter<MyDesignAdapter.MyDesignViewHolder>() {
 
-    private val list = ArrayList<MyDesignItem>()
+    private val list = ArrayList<MyDesignEntity>()
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyDesignViewHolder {
@@ -41,9 +41,9 @@ class MyDesignAdapter (
 
     }
 
-    fun setItems(items: MutableList<MyDesignItem>) {
+    fun setItems(entities: MutableList<MyDesignEntity>) {
         list.clear()
-        list.addAll(items)
+        list.addAll(entities)
         notifyDataSetChanged()
     }
 
@@ -52,7 +52,7 @@ class MyDesignAdapter (
 
 
         fun updateItem(
-            model: MyDesignItem,
+            model: MyDesignEntity,
             context: Context,
             glide: RequestManager,
             myDesignListener: MyDesignListener

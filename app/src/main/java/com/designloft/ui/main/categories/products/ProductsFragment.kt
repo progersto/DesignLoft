@@ -1,4 +1,4 @@
-package com.designloft.ui.main.categories.product
+package com.designloft.ui.main.categories.products
 
 import android.os.Bundle
 import android.util.Log
@@ -10,17 +10,18 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.ProductItem
+import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
+import com.designloft.ui.main.categories.products.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProductsFragment : BaseFragment() {
 
-    private lateinit var productAdapter: ProductAdapter
-    private var productList = ArrayList<ProductItem>()
-
+    private lateinit var productsAdapter: ProductsAdapter
+    private var productList = ArrayList<Product>()
+    private lateinit var productsListener: ProductsListener
     private val viewModel by sharedViewModel<MainViewModel>()
 
     private val categoryName by lazy {
@@ -51,6 +52,8 @@ class ProductsFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        categoryId?.also { viewModel.getProductsByCategoryId(it) }
+
         text_toolbar.text = categoryName
 
         val options = RequestOptions()
@@ -58,17 +61,25 @@ class ProductsFragment : BaseFragment() {
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter()
             .error(R.drawable.no_image)
-        productAdapter = ProductAdapter(options) { product ->
-            Log.d("ddddd", " dddd")
-        }
-        products_adapter.adapter = productAdapter
+        productsListener = object : ProductsListener {
 
-        viewModel.products.observe(myLifecycleOwner, Observer { list ->
-            val filterList = list.filter { it.categoryId == categoryId } as MutableList<ProductItem>
+            override fun onItemFavorite(product: Product) {
+                viewModel.updateProduct(product)
+            }
+
+            override fun onItemClick(product: Product) {
+                showFragment(ProductFragment.newInstance(product.id, product.name))
+            }
+        }
+        productsAdapter = ProductsAdapter(options, productsListener)
+        products_adapter.adapter = productsAdapter
+
+        viewModel.products.observe(viewLifecycleOwner, Observer { list ->
+            val filterList = list.filter { it.categoryId == categoryId } as MutableList<Product>
             list?.also {
                 productList.clear()
                 productList.addAll(filterList)
-                productAdapter.setItems(filterList)
+                productsAdapter.setItems(filterList)
             }
         })
     }

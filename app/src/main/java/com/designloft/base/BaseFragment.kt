@@ -49,7 +49,7 @@ abstract class BaseFragment : Fragment() {
     fun showFragment(fragment: BaseFragment){
         activity!!.supportFragmentManager
                 .beginTransaction()
-                .add(R.id.container, fragment)
+                .replace(R.id.container, fragment)
                 .addToBackStack(null)
                 .commit()
     }

@@ -10,16 +10,20 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.ProductItem
+import com.designloft.database.entities.ProductEntity
+import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
-import com.designloft.ui.main.categories.product.ProductAdapter
+import com.designloft.ui.main.categories.products.ProductsAdapter
+import com.designloft.ui.main.categories.products.ProductsListener
+import com.designloft.ui.main.categories.products.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavoriteFragment : BaseFragment() {
 
-    private lateinit var productAdapter: ProductAdapter
-    private var productList = ArrayList<ProductItem>()
+    private lateinit var productsAdapter: ProductsAdapter
+    private var productList = ArrayList<Product>()
+    private lateinit var productsListener: ProductsListener
 
     private val viewModel by sharedViewModel<MainViewModel>()
 
@@ -42,23 +46,32 @@ class FavoriteFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        viewModel.getFavorites()
+
         val options = RequestOptions()
             .override(200, 200)
             .diskCacheStrategy(DiskCacheStrategy.ALL)
             .fitCenter()
             .error(R.drawable.no_image)
 
-        productAdapter = ProductAdapter(options) { product ->
-            Log.d("ddddd", " dddd")
-        }
-        favorite_adapter.adapter = productAdapter
+        productsListener = object : ProductsListener {
 
-        viewModel.products.observe(myLifecycleOwner, Observer { list ->
-            val filterList = list.filter { it.favorite == true } as MutableList<ProductItem>
+            override fun onItemFavorite(product: Product) {
+                viewModel.updateProduct(product)
+            }
+
+            override fun onItemClick(product: Product) {
+//                showFragment(ProductFragment.newInstance(product.id, product.name))
+            }
+        }
+        productsAdapter = ProductsAdapter(options, productsListener)
+        favorite_adapter.adapter = productsAdapter
+
+        viewModel.favorites.observe(myLifecycleOwner, Observer { list ->
             list?.also {
                 productList.clear()
-                productList.addAll(filterList)
-                productAdapter.setItems(filterList)
+                productList.addAll(list)
+                productsAdapter.setItems(list)
             }
         })
     }

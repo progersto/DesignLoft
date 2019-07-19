@@ -12,15 +12,16 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
-import com.designloft.database.entities.CategoryItem
+import com.designloft.database.entities.CategoryEntity
+import com.designloft.models.Category
 import kotlinx.android.synthetic.main.item_category.view.*
 import java.util.*
 
-class CategoriesAdapter (private val options: RequestOptions, private val clickListener: (CategoryItem) -> Unit)
+class CategoriesAdapter (private val options: RequestOptions, private val clickListener: (Category) -> Unit)
 
     : RecyclerView.Adapter<CategoriesAdapter.CatalogViewHolder>() {
 
-    private val list = ArrayList<CategoryItem>()
+    private val list = ArrayList<Category>()
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CatalogViewHolder {
@@ -41,9 +42,9 @@ class CategoriesAdapter (private val options: RequestOptions, private val clickL
         }
     }
 
-    fun setItems(items: MutableList<CategoryItem>) {
+    fun setItems(entities: MutableList<Category>) {
         list.clear()
-        list.addAll(items)
+        list.addAll(entities)
         notifyDataSetChanged()
     }
 
@@ -52,14 +53,14 @@ class CategoriesAdapter (private val options: RequestOptions, private val clickL
         private lateinit var picture: ImageView
         private lateinit var name: TextView
 
-        fun updateItem(model: CategoryItem, context: Context, glide: RequestManager) {
+        fun updateItem(model: Category, context: Context, glide: RequestManager) {
             itemView.catalog_item_name.text = model.name
 
-            picture = itemView.catalog_item_image
-            glide.load(model.image)
+
+            glide.load(model.imageList[0].imageLink)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(options)
-                .into(picture)
+                .into(itemView.catalog_item_image)
         }
     }
 }

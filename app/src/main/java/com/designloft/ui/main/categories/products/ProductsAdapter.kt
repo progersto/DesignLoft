@@ -1,4 +1,4 @@
-package com.designloft.ui.main.categories.product
+package com.designloft.ui.main.categories.products
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -10,15 +10,16 @@ import com.bumptech.glide.RequestManager
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
-import com.designloft.database.entities.ProductItem
+import com.designloft.models.Product
 import kotlinx.android.synthetic.main.item_product.view.*
 import java.util.ArrayList
 
-class ProductAdapter (private val options: RequestOptions, private val clickListener: (ProductItem) -> Unit)
+class ProductsAdapter(
+    private val options: RequestOptions,
+    private val productsListener: ProductsListener
+) : RecyclerView.Adapter<ProductsAdapter.ProductViewHolder>() {
 
-    : RecyclerView.Adapter<ProductAdapter.ProductViewHolder>() {
-
-    private val list = ArrayList<ProductItem>()
+    private val list = ArrayList<Product>()
     private lateinit var context: Context
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ProductViewHolder {
@@ -32,30 +33,34 @@ class ProductAdapter (private val options: RequestOptions, private val clickList
     override fun getItemCount(): Int = list.size
 
     override fun onBindViewHolder(holder: ProductViewHolder, position: Int) {
-        holder.updateItem(list[position], context, Glide.with(context))
+        holder.updateItem(list[position], context, Glide.with(context), productsListener)
 
         holder.itemView.setOnClickListener {
-            clickListener(list[position])
+            productsListener.onItemClick(list[position])
         }
     }
 
-    fun setItems(items: MutableList<ProductItem>) {
+    fun setItems(entities: MutableList<Product>) {
         list.clear()
-        list.addAll(items)
+        list.addAll(entities)
         notifyDataSetChanged()
     }
 
-
     class ProductViewHolder(itemView: View, val options: RequestOptions) : RecyclerView.ViewHolder(itemView) {
 
-        fun updateItem(model: ProductItem, context: Context, glide: RequestManager) {
+        fun updateItem(
+            model: Product,
+            context: Context,
+            glide: RequestManager,
+            productsListener: ProductsListener
+        ) {
             itemView.product_item_name.text = model.name
-            val price =  "${model.price} $"
+            val price = "${model.price} $"
             itemView.product_item_price.text = price
-            itemView.product_item_favorite.isChecked = model.favorite
+            itemView.product_item_favorite.background = if (model.favorite) context.resources.getDrawable(R.drawable.star2) else context.resources.getDrawable(R.drawable.star_empty)
             itemView.product_sale.visibility = if (model.sale) View.VISIBLE else View.GONE
 
-            glide.load(model.image)
+            glide.load(model.imageList[0].imageLink)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .apply(options)
                 .into(itemView.product_item_image)

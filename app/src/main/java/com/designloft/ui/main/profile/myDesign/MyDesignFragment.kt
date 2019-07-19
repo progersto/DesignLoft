@@ -9,8 +9,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.MyDesignItem
-import com.designloft.database.entities.ProductItem
+import com.designloft.database.entities.MyDesignEntity
+import com.designloft.database.entities.ProductEntity
 import com.designloft.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_my_disign.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -18,7 +18,7 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 class MyDesignFragment : BaseFragment() {
 
     private lateinit var myDesignAdapter: MyDesignAdapter
-    private var productList = ArrayList<ProductItem>()
+    private var productList = ArrayList<ProductEntity>()
     private lateinit var myDesignListener: MyDesignListener
 
     private val viewModel by sharedViewModel<MainViewModel>()
@@ -50,11 +50,11 @@ class MyDesignFragment : BaseFragment() {
 
         myDesignListener = object : MyDesignListener {
 
-            override fun onItemClick(position: MyDesignItem) {
+            override fun onItemClick(position: MyDesignEntity) {
                 Log.d("MyDesignFragment", " onItemClick")
             }
 
-            override fun onItemDelete(position: MyDesignItem) {
+            override fun onItemDelete(position: MyDesignEntity) {
                 Log.d("MyDesignFragment", " onItemDelete")
             }
         }
@@ -62,17 +62,5 @@ class MyDesignFragment : BaseFragment() {
         myDesignAdapter = MyDesignAdapter(options, myDesignListener)
 
         my_design_adapter.adapter = myDesignAdapter
-
-
-
-//        viewModel.products.observe(myLifecycleOwner, Observer { list ->
-//            list?.also {
-//                productList.clear()
-//                productList.addAll(it)
-//                myDesignAdapter.setItems(it)
-//            }
-//        })
     }
-
-
 }

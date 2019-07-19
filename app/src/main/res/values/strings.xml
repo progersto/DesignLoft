@@ -3,4 +3,11 @@
     <string name="contacts_toolbar">Контакты</string>
     <string name="favorite">Избранное</string>
     <string name="my_design">Мой дизайн</string>
+    <string name="create_design">Создай свой дизайн</string>
+
+    <string name="product_buy_btn">Купить</string>
+    <string name="product_title_description">Детали</string>
+    <string name="product_size_title_height">высота см</string>
+    <string name="product_size_title_width">ширина см</string>
+    <string name="product_size_title_length">длина см</string>
 </resources>
