@@ -12,18 +12,28 @@
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
             android:background="@color/background_light_grey"
-            android:layout_above="@id/bottom_navigation"/>
+            android:layout_above="@+id/coordinator_layout"/>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-            android:id="@+id/bottom_navigation"
-            android:layout_width="match_parent"
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+            android:id="@+id/coordinator_layout"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:labelVisibilityMode="unlabeled"
-            app:itemBackground="@color/white"
-            app:itemIconTint="@color/selector_catalog_bottom_navigation"
-            app:menu="@menu/botton_catalog_menu"
             android:layout_alignParentBottom="true"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    >
+
+        <com.google.android.material.bottomnavigation.BottomNavigationView
+                android:id="@+id/bottom_navigation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:labelVisibilityMode="unlabeled"
+                app:itemBackground="@color/white"
+                app:layout_behavior="@string/hide_bottom_view_on_scroll_behavior"
+                app:itemIconTint="@color/selector_catalog_bottom_navigation"
+                app:menu="@menu/botton_catalog_menu"
+                android:layout_alignParentBottom="true"
+        />
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
 
 </RelativeLayout>

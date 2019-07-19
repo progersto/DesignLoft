@@ -4,16 +4,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.ViewPager
 import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.ui.main.MainViewModel
-import com.designloft.ui.main.categories.CategoriesFragment
-import com.designloft.ui.main.contacts.ContactsFragment
 import com.designloft.ui.main.profile.favorite.FavoriteFragment
 import com.designloft.ui.main.profile.myDesign.MyDesignFragment
-import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : BaseFragment() {
@@ -35,6 +32,9 @@ class ProfileFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setupViewPager()
+        back_btn.visibility = View.GONE
+        filter_btn.visibility = View.GONE
+        search_btn.visibility = View.GONE
     }
 
     private fun setupViewPager() {

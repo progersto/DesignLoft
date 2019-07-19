@@ -1,10 +1,15 @@
 package com.designloft.ui.main.categories.products
 
+import android.content.Context
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -22,6 +27,8 @@ class ProductsFragment : BaseFragment() {
     private lateinit var productsAdapter: ProductsAdapter
     private var productList = ArrayList<Product>()
     private lateinit var productsListener: ProductsListener
+    private lateinit var imm: InputMethodManager
+
     private val viewModel by sharedViewModel<MainViewModel>()
 
     private val categoryName by lazy {
@@ -54,7 +61,37 @@ class ProductsFragment : BaseFragment() {
 
         categoryId?.also { viewModel.getProductsByCategoryId(it) }
 
+        imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+
+        back_btn.setOnClickListener { activity?.onBackPressed() }
         text_toolbar.text = categoryName
+        search_btn.setOnClickListener {
+            back_btn.visibility = View.GONE
+            text_toolbar.visibility = View.GONE
+            search_btn.visibility = View.GONE
+            filter_btn.visibility = View.GONE
+            searchText.visibility = View.VISIBLE
+            clearSearch.visibility = View.VISIBLE
+            searchText.requestFocus()
+            searchText.addTextChangedListener(textWatcher)
+        }
+        searchText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            } else {
+                imm.hideSoftInputFromWindow(searchText.windowToken, 0)
+            }
+        }
+        clearSearch.setOnClickListener {
+            back_btn.visibility = View.VISIBLE
+            text_toolbar.visibility = View.VISIBLE
+            search_btn.visibility = View.VISIBLE
+            filter_btn.visibility = View.VISIBLE
+            searchText.visibility = View.GONE
+            clearSearch.visibility = View.GONE
+            searchText.setText("")
+
+        }
 
         val options = RequestOptions()
             .override(200, 200)
@@ -83,5 +120,14 @@ class ProductsFragment : BaseFragment() {
         })
     }
 
+    private val textWatcher = object : TextWatcher {
+        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+            val newList = productList.filter { s in it.name.toLowerCase() } as MutableList
+            productsAdapter.setItems(newList)
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun afterTextChanged(s: Editable) {}
+    }
 
 }

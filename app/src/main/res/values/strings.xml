@@ -10,4 +10,6 @@
     <string name="product_size_title_height">высота см</string>
     <string name="product_size_title_width">ширина см</string>
     <string name="product_size_title_length">длина см</string>
+
+    <string name="search_hint">Найти</string>
 </resources>

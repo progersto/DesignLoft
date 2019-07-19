@@ -13,7 +13,6 @@ import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.database.entities.PhotoProductEntity
 import com.designloft.ui.main.MainViewModel
-import com.designloft.ui.main.categories.products.ProductsFragment
 import com.designloft.utils.roundOffDecimal
 import com.designloft.utils.roundOffDecimalOne
 import kotlinx.android.synthetic.main.activity_main.*
@@ -61,8 +60,13 @@ class ProductFragment : BaseFragment() {
             viewModel.getProductByyId(it)
         }
 
+        filter_btn.visibility = View.GONE
+        search_btn.visibility = View.GONE
         text_toolbar.text = productName
         activity!!.bottom_navigation.visibility = View.GONE
+        back_btn.setOnClickListener {
+            activity?.onBackPressed()
+        }
 
         val options = RequestOptions()
             .override(300, 300)

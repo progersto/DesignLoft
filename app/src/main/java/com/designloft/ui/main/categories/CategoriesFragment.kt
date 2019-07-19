@@ -9,7 +9,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.CategoryEntity
 import com.designloft.models.Category
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsFragment
@@ -39,6 +38,9 @@ class CategoriesFragment : BaseFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         text_toolbar.text = resources.getString(R.string.app_name)
+        back_btn.visibility = View.GONE
+        filter_btn.visibility = View.GONE
+        search_btn.visibility = View.GONE
 
         val options = RequestOptions()
             .override(200, 200)
