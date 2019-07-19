@@ -68,18 +68,17 @@ class ProductsFragment : BaseFragment() {
             }
 
             override fun onItemClick(product: Product) {
-                showFragment(ProductFragment.newInstance(product.id, product.name))
+                showFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_category)
             }
         }
         productsAdapter = ProductsAdapter(options, productsListener)
         products_adapter.adapter = productsAdapter
 
         viewModel.products.observe(viewLifecycleOwner, Observer { list ->
-            val filterList = list.filter { it.categoryId == categoryId } as MutableList<Product>
             list?.also {
                 productList.clear()
-                productList.addAll(filterList)
-                productsAdapter.setItems(filterList)
+                productList.addAll(list)
+                productsAdapter.setItems(list)
             }
         })
     }

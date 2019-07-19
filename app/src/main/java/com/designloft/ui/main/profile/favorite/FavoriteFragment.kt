@@ -1,7 +1,6 @@
 package com.designloft.ui.main.profile.favorite
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +9,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.ProductEntity
 import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsAdapter
 import com.designloft.ui.main.categories.products.ProductsListener
 import com.designloft.ui.main.categories.products.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
+import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavoriteFragment : BaseFragment() {
@@ -26,7 +25,6 @@ class FavoriteFragment : BaseFragment() {
     private lateinit var productsListener: ProductsListener
 
     private val viewModel by sharedViewModel<MainViewModel>()
-
 
     companion object {
         const val TAG = "ProductsFragment"
@@ -61,7 +59,7 @@ class FavoriteFragment : BaseFragment() {
             }
 
             override fun onItemClick(product: Product) {
-//                showFragment(ProductFragment.newInstance(product.id, product.name))
+                showFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_favorite)
             }
         }
         productsAdapter = ProductsAdapter(options, productsListener)

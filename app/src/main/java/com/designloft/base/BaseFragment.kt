@@ -46,10 +46,10 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun showFragment(fragment: BaseFragment){
+    fun showFragment(fragment: BaseFragment, idContainer: Int){
         activity!!.supportFragmentManager
                 .beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(idContainer, fragment)
                 .addToBackStack(null)
                 .commit()
     }

@@ -47,7 +47,7 @@ class CategoriesFragment : BaseFragment() {
             .error(R.drawable.no_image)
 
         categoriesAdapter = CategoriesAdapter(options) { category ->
-            showFragment(ProductsFragment.newInstance(category.name, category.id))
+            showFragment(ProductsFragment.newInstance(category.name, category.id), R.id.container_category)
         }
         catalog_adapter.adapter = categoriesAdapter
 

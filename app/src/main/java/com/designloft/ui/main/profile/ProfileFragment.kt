@@ -38,7 +38,6 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun setupViewPager() {
-
         val adapter = MyFragmentPagerAdapter(fragmentManager!!)
 
         val favoriteFragment=  FavoriteFragment.newInstance()
