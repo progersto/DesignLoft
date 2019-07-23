@@ -4,12 +4,10 @@ import android.content.Context
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -17,6 +15,7 @@ import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
+import com.designloft.ui.main.categories.products.product.FilterDialogFragment
 import com.designloft.ui.main.categories.products.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -71,7 +70,7 @@ class ProductsFragment : BaseFragment() {
             search_btn.visibility = View.GONE
             filter_btn.visibility = View.GONE
             searchText.visibility = View.VISIBLE
-            clearSearch.visibility = View.VISIBLE
+            filter_close.visibility = View.VISIBLE
             searchText.requestFocus()
             searchText.addTextChangedListener(textWatcher)
         }
@@ -82,15 +81,18 @@ class ProductsFragment : BaseFragment() {
                 imm.hideSoftInputFromWindow(searchText.windowToken, 0)
             }
         }
-        clearSearch.setOnClickListener {
+        filter_close.setOnClickListener {
             back_btn.visibility = View.VISIBLE
             text_toolbar.visibility = View.VISIBLE
             search_btn.visibility = View.VISIBLE
             filter_btn.visibility = View.VISIBLE
             searchText.visibility = View.GONE
-            clearSearch.visibility = View.GONE
+            filter_close.visibility = View.GONE
             searchText.setText("")
 
+        }
+        filter_btn.setOnClickListener {
+            replaceFragmentInIdContent(FilterDialogFragment.newInstance(categoryId!!))
         }
 
         val options = RequestOptions()
@@ -101,11 +103,11 @@ class ProductsFragment : BaseFragment() {
         productsListener = object : ProductsListener {
 
             override fun onItemFavorite(product: Product) {
-                viewModel.updateProduct(product)
+                viewModel.updateProductFavorite(product)
             }
 
             override fun onItemClick(product: Product) {
-                showFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_category)
+                addFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_category)
             }
         }
         productsAdapter = ProductsAdapter(options, productsListener)
@@ -116,13 +118,20 @@ class ProductsFragment : BaseFragment() {
                 productList.clear()
                 productList.addAll(list)
                 productsAdapter.setItems(list)
+                viewModel.isGeneralList.value = true
+            }
+        })
+        viewModel.filteredProducts.observe(viewLifecycleOwner, Observer { list ->
+            list?.also {
+                productsAdapter.setItems(list)
+                viewModel.isGeneralList.value = false
             }
         })
     }
 
     private val textWatcher = object : TextWatcher {
-        override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
-            val newList = productList.filter { s in it.name.toLowerCase() } as MutableList
+        override fun onTextChanged(searchText: CharSequence, start: Int, before: Int, count: Int) {
+            val newList = productList.filter { searchText in it.name.toLowerCase() } as MutableList
             productsAdapter.setItems(newList)
         }
 
@@ -130,4 +139,8 @@ class ProductsFragment : BaseFragment() {
         override fun afterTextChanged(s: Editable) {}
     }
 
+    override fun onPause() {
+        super.onPause()
+        imm.hideSoftInputFromWindow(searchText.windowToken, 0)
+    }
 }

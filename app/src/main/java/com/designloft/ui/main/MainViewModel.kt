@@ -8,8 +8,11 @@ import com.designloft.models.Product
 class MainViewModel(private val dataManager: MainDataManager) : BaseViewModel() {
     val categories = dataManager.categories
     val products = dataManager.products
+    val filteredProducts = dataManager.filteredProducts
     val product = dataManager.product
     val favorites = dataManager.favorites
+    val isGeneralList = dataManager.isGeneralList
+
 
     fun initDB() {
         dataManager.initDB()
@@ -27,7 +30,12 @@ class MainViewModel(private val dataManager: MainDataManager) : BaseViewModel() 
         dataManager.getFavorites()
     }
 
-    fun updateProduct(product: Product){
-        dataManager.updateProduct(ProductEntity.toProductEntity(product))
+    fun updateProductFavorite(product: Product){
+        dataManager.updateProductFavorite(ProductEntity.toProductEntity(product))
+    }
+
+    override fun onCreateView() {
+        super.onCreateView()
+
     }
 }

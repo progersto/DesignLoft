@@ -15,7 +15,6 @@ import com.designloft.ui.main.categories.products.ProductsAdapter
 import com.designloft.ui.main.categories.products.ProductsListener
 import com.designloft.ui.main.categories.products.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
-import kotlinx.android.synthetic.main.fragment_profile.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class FavoriteFragment : BaseFragment() {
@@ -55,7 +54,7 @@ class FavoriteFragment : BaseFragment() {
         productsListener = object : ProductsListener {
 
             override fun onItemFavorite(product: Product) {
-                viewModel.updateProduct(product)
+                viewModel.updateProductFavorite(product)
             }
 
             override fun onItemClick(product: Product) {

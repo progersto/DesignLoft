@@ -10,7 +10,6 @@ import com.designloft.repository.ModelRepository
 import com.designloft.ui.main.MainViewModel
 import com.designloft.utils.BASE_URSL
 import com.google.gson.Gson
-import org.jetbrains.anko.defaultSharedPreferences
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -29,7 +28,7 @@ private val networkModule = module {
 }
 
 private val dataModule = module {
-    single { get<Context>().defaultSharedPreferences }
+    single { get<Context>().applicationContext.getSharedPreferences("Prefers", Context.MODE_PRIVATE) }
     single { PreferencesManager(get()) }
     single { MainDataManager(get(), get()) }
     single { ModelRepository(get(), get(), get(), get()) }

@@ -7,13 +7,9 @@ import com.designloft.database.daos.ProductsDao
 import com.designloft.database.entities.CategoryEntity
 import com.designloft.database.entities.PhotoProductEntity
 import com.designloft.database.entities.ProductEntity
-import com.designloft.models.Category
-import com.designloft.models.Product
-import org.jetbrains.anko.doAsync
-import org.jetbrains.anko.doAsyncResult
-import org.jetbrains.anko.uiThread
-import java.util.ArrayList
-import java.util.concurrent.Future
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import java.util.*
 
 class ModelRepository(
     private val preffsManager: PreferencesManager,
@@ -47,7 +43,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",200.00, 1000.99,false, false,5.0, 25.5, 25.5,5))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",200.00, 100.99,false, false,5.0, 25.5, 25.5,5))
         listProduct.add(ProductEntity(null, "Стул1", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -57,7 +53,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 1000.99,false, false,5.0, 25.5, 25.5,5))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 800.99,false, false,5.0, 25.5, 25.5,5))
         listProduct.add(ProductEntity(null, "Диван", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -67,7 +63,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2020.00, 1000.99,false, true,4.0, 25.5, 25.5,4))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2020.00, 7000.99,false, true,7.0, 28.5, 29.5,4))
         listProduct.add(ProductEntity(null, "Диван1", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -77,7 +73,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 1000.99,false, false, 4.0, 25.5, 25.5,4))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 6000.99,false, false, 4.0, 25.5, 25.5,4))
         listProduct.add(ProductEntity(null, "Стол", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -97,8 +93,8 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2010.99, 1000.99,true,false, 1.0, 25.5, 25.5,1))
-        listProduct.add(ProductEntity(null, "Гардероб", "",0.0,1000.99,false, true, 2.0, 25.5, 25.5,2))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2010.99, 1042.99,true,false, 1.0, 25.5, 25.5,1))
+        listProduct.add(ProductEntity(null, "Гардероб", "",0.0,5443.99,false, true, 2.0, 25.5, 25.5,2))
         listProduct.add(ProductEntity(null, "Декор", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -108,7 +104,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2020.99, 1000.99,true,false, 3.0, 25.5, 25.5,3))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2020.99, 3400.99,true,false, 3.0, 25.5, 25.5,3))
         listProduct.add(ProductEntity(null, "Лампа", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -118,7 +114,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2001.99, 1000.99,false, true,6.0, 25.5, 25.5,6))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2001.99, 4000.99,false, true,6.0, 25.5, 25.5,6))
         listProduct.add(ProductEntity(null, "Лампа1",  "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -128,7 +124,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2010.99, 1000.99,false, false,6.0, 25.5, 25.5,6))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2010.99, 5000.99,false, false,6.0, 25.5, 25.5,6))
         listProduct.add(ProductEntity(null, "Кровать", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -138,7 +134,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2002.99, 2000.99,false, false,7.0, 25.5, 25.5,7))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2002.99, 2500.99,false, false,7.0, 25.5, 25.5,7))
         listProduct.add(ProductEntity(null, "Люстра", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -148,7 +144,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",2030.99, 2000.99,false, false,8.0, 25.5, 25.5,8))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",2030.99, 2300.99,false, false,8.0, 25.5, 25.5,8))
         listProduct.add(ProductEntity(null, "Люстра1", "Обзор Кресло Гилмор Черный (47331805)\n" +
                 "современный стильный дизайн и продуманная эргономичность\n" +
                 "комфортное мягкое сиденье в обивке из дышащей ткани\n" +
@@ -158,7 +154,7 @@ class ModelRepository(
                 "прочная устойчивая база изготовлена из хромированного металла\n" +
                 "механизм качания с фиксацией в одном положении\n" +
                 "регулировка высоты сиденья под рост пользователя\n" +
-                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 1000.99,true, true, 8.0, 25.5, 25.5,8))
+                "изделие рассчитано на максимальную нагрузку 120 килограмм",0.0, 1600.99,true, true, 8.0, 25.5, 25.5,8))
 
         return listProduct
     }
@@ -189,53 +185,49 @@ class ModelRepository(
         return listPhotoEntity
     }
 
-    fun initDB() {
-        val listCategory = initCategoryList()
-        val listProducts =  initProductList()
-        val listPhoto =  initPhoto()
-        categoriesDao.insert(*listCategory.toTypedArray())
-        productsDao.insert(*listProducts.toTypedArray())
-        photoProductDao.insert(*listPhoto.toTypedArray())
-        preffsManager.fistInit(true)
+    suspend fun initDB() {
+        withContext(Dispatchers.IO) {
+            val listCategory = initCategoryList()
+            val listProducts = initProductList()
+            val listPhoto = initPhoto()
+            categoriesDao.insert(*listCategory.toTypedArray())
+            productsDao.insert(*listProducts.toTypedArray())
+            photoProductDao.insert(*listPhoto.toTypedArray())
+            preffsManager.fistInit(true)
+        }
     }
 
-    fun getProductsByCategoryId(categoryId: Int): MutableList<Product>{
-        return doAsyncResult { productsDao.getProductsByCategoryId(categoryId) }.get().map {
-            val listPhotoProductEntity = doAsyncResult {
+    suspend fun getProductsByCategoryId(categoryId: Int) = withContext(Dispatchers.IO) {
+        productsDao.getProductsByCategoryId(categoryId).map {
+            val listPhotoProductEntity =
                 photoProductDao.getPhotoProductListByProductId(it.id!!)
-            }.get()
             ProductEntity.toProduct(it, listPhotoProductEntity)
-        } as MutableList<Product>
+        }.toMutableList()
     }
 
-    fun getProductById(productId: Int): Product {
-        val productEntity =  doAsyncResult { productsDao.getProductByyId(productId) }.get()
-        val listPhotoProductEntity = doAsyncResult { photoProductDao.getPhotoProductListByProductId(productId) }.get()
-        return ProductEntity.toProduct(productEntity, listPhotoProductEntity)
+    suspend fun getProductById(productId: Int) = withContext(Dispatchers.IO) {
+        val productEntity = productsDao.getProductByyId(productId)
+        val listPhotoProductEntity = photoProductDao.getPhotoProductListByProductId(productId)
+        ProductEntity.toProduct(productEntity, listPhotoProductEntity)
     }
 
-    fun getAllCategory(): MutableList<Category>{
-        return doAsyncResult { categoriesDao.getItemList() }.get().map {
-            val listPhotoProductEntity = doAsyncResult {
+    suspend fun getAllCategory() = withContext(Dispatchers.IO) {
+        categoriesDao.getItemList().map {
+            val listPhotoProductEntity =
                 photoProductDao.getPhotoProductByCategoryId(it.id!!)
-            }.get()
             CategoryEntity.toCategory(it, listPhotoProductEntity)
-        } as MutableList<Category>
+        }.toMutableList()
     }
 
-    fun getFavorites(): MutableList<Product>{
-        return  doAsyncResult { productsDao.getFavorites() }.get().map {
-            val listPhotoProductEntity = doAsyncResult {
-                photoProductDao.getPhotoProductListByProductId(it.id!!)
-            }.get()
+    suspend fun getFavorites() = withContext(Dispatchers.IO) {
+        productsDao.getFavorites().map {
+            val listPhotoProductEntity = photoProductDao.getPhotoProductListByProductId(it.id!!)
             ProductEntity.toProduct(it, listPhotoProductEntity)
-        } as MutableList<Product>
+        }.toMutableList()
     }
 
-    fun updateProduct(productEntity: ProductEntity): Int{
-      return doAsyncResult { productsDao.updateProduct(productEntity) }.get()
-    }
-
-
-
+    suspend fun updateProduct(productEntity: ProductEntity) =
+        withContext(Dispatchers.IO) { productsDao.updateProduct(productEntity) }
 }
+
+

@@ -10,4 +10,15 @@
     <color name="grey">#868686</color>
     <color name="background_light_grey">#F8F8F8</color>
     <color name="yellow">#D3CA4E</color>
+    <color name="light_yellow">#F8F291</color>
+    <color name="black_30">#4A020202</color>
+
+    <array name="filter_color_array">
+        <item>#000000</item>
+        <item>#01186B</item>
+        <item>#7692F8</item>
+        <item>#FA0303</item>
+        <item>#D3CA4E</item>
+        <item>#FFFFFF</item>
+    </array>
 </resources>

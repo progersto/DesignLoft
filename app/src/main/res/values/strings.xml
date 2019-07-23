@@ -12,4 +12,15 @@
     <string name="product_size_title_length">длина см</string>
 
     <string name="search_hint">Найти</string>
+
+    <string name="filter_price_title">Цена ($)</string>
+    <string name="filter_color_title">Цвет</string>
+    <string name="filter_sort_by_price_title">Сортировать по цене</string>
+    <string name="filter_height_title">Высота (см)</string>
+    <string name="filter_width_title">Ширина (см)</string>
+    <string name="filter_length_title">Длина (см)</string>
+    <string name="filter_from_high">от высокой</string>
+    <string name="filter_from_low">от низкой</string>
+    <string name="filter_apply_btn">Применить</string>
+
 </resources>

@@ -11,7 +11,6 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.database.entities.PhotoProductEntity
 import com.designloft.ui.main.MainViewModel
 import com.designloft.utils.roundOffDecimal
 import com.designloft.utils.roundOffDecimalOne
@@ -22,10 +21,7 @@ import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProductFragment : BaseFragment() {
-
     private lateinit var productsAdapter: ProductPhotoAdapter
-    private var productList = ArrayList<PhotoProductEntity>()
-
     private val viewModel by sharedViewModel<MainViewModel>()
 
     private val productId by lazy {
@@ -78,13 +74,12 @@ class ProductFragment : BaseFragment() {
         }
         fragment_product_photo_adapter.adapter = productsAdapter
 
-        Paint.STRIKE_THRU_TEXT_FLAG
         viewModel.product.observe(myLifecycleOwner, Observer { product ->
             product?.also {
                 fragment_product_sale.visibility = if (product.sale) View.VISIBLE else View.GONE
                 fragment_product_favorite.isChecked = product.favorite
                 fragment_product_favorite.setOnCheckedChangeListener { _, isChecked ->
-                    viewModel.updateProduct(it.copy(favorite = isChecked))
+                    viewModel.updateProductFavorite(it.copy(favorite = isChecked))
                 }
                 fragment_product_old_price.visibility = if (product.oldPrice > 0) View.VISIBLE else View.GONE
                 val price =  "${product.price.roundOffDecimal()} $"
@@ -102,12 +97,11 @@ class ProductFragment : BaseFragment() {
                 length.fragment_product_size_title.text = resources.getString(R.string.product_size_title_length)
                 fragment_product_description.text = product.description
 
-                productList.clear()
-                productList.addAll(product.imageList)
+//                productList.clear()
+//                productList.addAll(product.imageList)
                 productsAdapter.setItems(product.imageList)
             }
         })
-
     }
 
     override fun onDestroyView() {

@@ -54,6 +54,22 @@ abstract class BaseFragment : Fragment() {
                 .commit()
     }
 
+    fun addFragment(fragment: BaseFragment, idContainer: Int){
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .add(idContainer, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
+    protected fun replaceFragmentInIdContent(fragment: BaseFragment) {
+        activity!!.supportFragmentManager
+            .beginTransaction()
+            .replace(android.R.id.content, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
+
     open fun onBackPressed(): Boolean {
         return true
     }
