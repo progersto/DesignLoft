@@ -2,14 +2,17 @@ package com.designloft.ui.main.categories
 
 import android.Manifest
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -18,6 +21,7 @@ import com.designloft.base.BaseFragment
 import com.designloft.models.Category
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsFragment
+import com.designloft.ui.selectBackground.SelectBackgroungActivity
 import kotlinx.android.synthetic.main.fragment_category.*
 import kotlinx.android.synthetic.main.fragment_select_design.view.*
 import kotlinx.android.synthetic.main.view_toolbar.*
@@ -63,16 +67,16 @@ class CategoriesFragment : BaseFragment() {
             }
         }
         viewSelectDesign.select_design_galery.setOnClickListener {
-
+            SelectBackgroungActivity.start(activity!!, 1)
         }
         viewSelectDesign.select_design_ar.setOnClickListener {
 
         }
         viewSelectDesign.select_design_camera.setOnClickListener {
-
+            SelectBackgroungActivity.start(activity!!, 0)
         }
         viewSelectDesign.select_design_template.setOnClickListener {
-
+            SelectBackgroungActivity.start(activity!!, 2)
         }
 
         val options = RequestOptions()
@@ -116,4 +120,5 @@ class CategoriesFragment : BaseFragment() {
             toast(R.string.select_design_no_permission)
         }
     }
+
 }

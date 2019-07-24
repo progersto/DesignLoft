@@ -1,4 +1,4 @@
-package com.designloft.ui.main.contacts
+package com.designloft.ui.selectBackground
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,26 +6,27 @@ import android.view.View
 import android.view.ViewGroup
 import com.designloft.R
 import com.designloft.base.BaseFragment
+import com.designloft.ui.main.contacts.ContactsFragment
 import kotlinx.android.synthetic.main.view_toolbar.*
 
-class ContactsFragment: BaseFragment() {
+class TemplateFragment: BaseFragment() {
 
     companion object {
-        const val TAG = "ContactsFragment"
+        const val TAG = "TemplateFragment"
 
         @JvmStatic
-        fun newInstance() = ContactsFragment()
+        fun newInstance() = TemplateFragment()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_contacts, container, false)
+        return inflater.inflate(R.layout.fragment_template, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        text_toolbar.text = resources.getString(R.string.contacts_toolbar)
-        back_btn.visibility = View.GONE
+        back_btn.visibility = View.VISIBLE
+        text_toolbar.visibility = View.GONE
         filter_btn.visibility = View.GONE
         search_btn.visibility = View.GONE
     }
