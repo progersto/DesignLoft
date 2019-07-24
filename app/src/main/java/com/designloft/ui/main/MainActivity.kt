@@ -6,7 +6,7 @@ import com.designloft.R
 import com.designloft.base.BaseActivity
 import com.designloft.base.BaseFragment
 import com.designloft.ui.main.categories.CategoriesFragment
-import com.designloft.ui.main.categories.products.product.ProductFragment
+import com.designloft.ui.main.product.ProductFragment
 import com.designloft.ui.main.contacts.ContactsFragment
 import com.designloft.ui.main.profile.ProfileFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel

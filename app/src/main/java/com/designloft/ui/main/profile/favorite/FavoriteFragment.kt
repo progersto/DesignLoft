@@ -13,7 +13,7 @@ import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsAdapter
 import com.designloft.ui.main.categories.products.ProductsListener
-import com.designloft.ui.main.categories.products.product.ProductFragment
+import com.designloft.ui.main.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_favorite.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 

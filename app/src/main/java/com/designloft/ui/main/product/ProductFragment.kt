@@ -1,4 +1,4 @@
-package com.designloft.ui.main.categories.products.product
+package com.designloft.ui.main.product
 
 import android.graphics.Paint
 import android.os.Bundle

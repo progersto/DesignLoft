@@ -15,8 +15,8 @@ import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
-import com.designloft.ui.main.categories.products.product.FilterDialogFragment
-import com.designloft.ui.main.categories.products.product.ProductFragment
+import com.designloft.ui.main.product.FilterDialogFragment
+import com.designloft.ui.main.product.ProductFragment
 import kotlinx.android.synthetic.main.fragment_products.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
