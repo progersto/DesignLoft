@@ -30,4 +30,8 @@ class ContactsFragment: BaseFragment() {
         search_btn.visibility = View.GONE
     }
 
+//    override fun onBackPressed(): Boolean {
+//        super.onBackPressed()
+//        return true
+//    }
 }

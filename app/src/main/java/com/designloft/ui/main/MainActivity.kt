@@ -2,9 +2,12 @@ package com.designloft.ui.main
 
 import android.os.Bundle
 import kotlinx.android.synthetic.main.activity_main.*
-import androidx.fragment.app.Fragment
 import com.designloft.R
 import com.designloft.base.BaseActivity
+import com.designloft.base.BaseFragment
+import com.designloft.ui.main.categories.CategoriesFragment
+import com.designloft.ui.main.categories.products.product.ProductFragment
+import com.designloft.ui.main.contacts.ContactsFragment
 import com.designloft.ui.main.profile.ProfileFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -42,10 +45,22 @@ class MainActivity : BaseActivity() {
     }
 
     override fun onBackPressed() {
-        val fragment: Fragment? = supportFragmentManager.findFragmentById(R.id.container)
-        if (fragment is ProfileFragment) {
+        val navigationFragment: BaseFragment? = navigationAdapter!!.getCurrentFragment()
+
+        if (navigationFragment is ContactsFragment) {
             finish()
         }
-        super.onBackPressed()
+        if (navigationFragment is ProfileFragment) {
+            val listFragments = supportFragmentManager.fragments.filter { frag -> frag.isVisible }
+            val fragment = listFragments[listFragments.size - 1]
+            if (fragment is ProductFragment) {
+                super.onBackPressed()
+            } else {
+                finish()
+            }
+        }
+        if (navigationFragment is CategoriesFragment) {
+            super.onBackPressed()
+        }
     }
 }

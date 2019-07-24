@@ -2,6 +2,7 @@ package com.designloft.base
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
@@ -46,19 +47,19 @@ abstract class BaseFragment : Fragment() {
         }
     }
 
-    fun showFragment(fragment: BaseFragment, idContainer: Int){
+    fun showFragment(fragment: BaseFragment, idContainer: Int, tag: String){
         activity!!.supportFragmentManager
                 .beginTransaction()
                 .replace(idContainer, fragment)
-                .addToBackStack(null)
+                .addToBackStack(tag)
                 .commit()
     }
 
-    fun addFragment(fragment: BaseFragment, idContainer: Int){
+    fun addFragment(fragment: BaseFragment, idContainer: Int, tag: String){
         activity!!.supportFragmentManager
             .beginTransaction()
             .add(idContainer, fragment)
-            .addToBackStack(null)
+            .addToBackStack(tag)
             .commit()
     }
 
@@ -68,10 +69,6 @@ abstract class BaseFragment : Fragment() {
             .replace(android.R.id.content, fragment)
             .addToBackStack(null)
             .commit()
-    }
-
-    open fun onBackPressed(): Boolean {
-        return true
     }
 
     open fun requestPermissionsResult(requestCode: Int, permissions: Array<out String>, resultCodes: IntArray) {}

@@ -79,12 +79,6 @@ abstract class BaseActivity : AppCompatActivity(){
         imm?.hideSoftInputFromWindow(window?.currentFocus?.windowToken, 0)
     }
 
-    override fun onBackPressed() {
-        if (currentFragment?.onBackPressed() != false || supportFragmentManager.backStackEntryCount == 0) {
-            super.onBackPressed()
-        }
-    }
-
     companion object {
         const val LOG_TAG = "myLogs"
     }

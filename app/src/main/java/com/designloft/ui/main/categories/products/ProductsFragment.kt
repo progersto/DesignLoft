@@ -107,7 +107,7 @@ class ProductsFragment : BaseFragment() {
             }
 
             override fun onItemClick(product: Product) {
-                addFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_category)
+                addFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_category, TAG)
             }
         }
         productsAdapter = ProductsAdapter(options, productsListener)

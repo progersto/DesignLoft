@@ -23,4 +23,12 @@
     <string name="filter_from_low">от низкой</string>
     <string name="filter_apply_btn">Применить</string>
 
+    <string name="select_design_galery">Галерея</string>
+    <string name="select_design_camera">Камера</string>
+    <string name="select_design_template">Шаблон</string>
+    <string name="select_design_ar">AR</string>
+    <string name="select_design_title">Создать свой дизан</string>
+    <string name="select_design_cancel">Отмена</string>
+    <string name="select_design_no_permission">Разрешения не предоставлены!</string>
+
 </resources>

@@ -82,13 +82,13 @@ class ProductFragment : BaseFragment() {
                     viewModel.updateProductFavorite(it.copy(favorite = isChecked))
                 }
                 fragment_product_old_price.visibility = if (product.oldPrice > 0) View.VISIBLE else View.GONE
-                val price =  "${product.price.roundOffDecimal()} $"
+                val price = "${product.price.roundOffDecimal()} $"
                 fragment_product_price.text = price
-                val oldPrice =  "${product.oldPrice.roundOffDecimal()} $"
+                val oldPrice = "${product.oldPrice.roundOffDecimal()} $"
                 fragment_product_old_price.text = oldPrice
                 fragment_product_old_price.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                fragment_product_buy_btn.setOnClickListener {  }
-                fragment_product_measure.setOnClickListener {  }
+                fragment_product_buy_btn.setOnClickListener { }
+                fragment_product_measure.setOnClickListener { }
                 height.fragment_product_size_data.text = product.height.roundOffDecimalOne()
                 width.fragment_product_size_data.text = product.width.roundOffDecimalOne()
                 length.fragment_product_size_data.text = product.length.roundOffDecimalOne()
@@ -97,8 +97,6 @@ class ProductFragment : BaseFragment() {
                 length.fragment_product_size_title.text = resources.getString(R.string.product_size_title_length)
                 fragment_product_description.text = product.description
 
-//                productList.clear()
-//                productList.addAll(product.imageList)
                 productsAdapter.setItems(product.imageList)
             }
         })
@@ -108,5 +106,4 @@ class ProductFragment : BaseFragment() {
         super.onDestroyView()
         activity!!.bottom_navigation.visibility = View.VISIBLE
     }
-
 }

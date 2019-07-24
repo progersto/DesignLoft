@@ -26,7 +26,7 @@ class FavoriteFragment : BaseFragment() {
     private val viewModel by sharedViewModel<MainViewModel>()
 
     companion object {
-        const val TAG = "ProductsFragment"
+        const val TAG = "FavoriteFragment"
         private const val CATEGORY_NAME = "category_name"
 
         fun newInstance() = FavoriteFragment().apply {
@@ -58,7 +58,7 @@ class FavoriteFragment : BaseFragment() {
             }
 
             override fun onItemClick(product: Product) {
-                showFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_favorite)
+                showFragment(ProductFragment.newInstance(product.id, product.name), R.id.container_favorite, TAG)
             }
         }
         productsAdapter = ProductsAdapter(options, productsListener)
