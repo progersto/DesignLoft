@@ -12,6 +12,7 @@
     <color name="yellow">#D3CA4E</color>
     <color name="light_yellow">#F8F291</color>
     <color name="black_30">#4A020202</color>
+    <color name="white_30">#4AFFFFFF</color>
 
     <array name="filter_color_array">
         <item>#000000</item>

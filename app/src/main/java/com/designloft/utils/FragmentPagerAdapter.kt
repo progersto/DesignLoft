@@ -1,10 +1,10 @@
-package com.designloft.ui.main.profile
+package com.designloft.utils
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
 
-class MyFragmentPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
+class FragmentPagerAdapter(manager: FragmentManager) : FragmentPagerAdapter(manager) {
     private val mFragmentList: ArrayList<Fragment> = ArrayList()
     private val mFragmentTitleList: ArrayList<String> = ArrayList()
 

@@ -2,19 +2,19 @@ package com.designloft.ui.selectBackground
 
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentPagerAdapter
-import com.designloft.ui.main.profile.ProfileFragment
 import android.view.ViewGroup
 import com.designloft.base.BaseFragment
+import com.designloft.ui.selectBackground.tampletes.TemplateFragment
 
-class SelectBgNavigationAdapter(fm: FragmentManager): FragmentPagerAdapter(fm){
+class SelectBgNavigationAdapter(fm: FragmentManager, idSelected: Int): FragmentPagerAdapter(fm){
 
     private var cameraFragment: CameraFragment? = null
     private var galeryFragment: GalleryFragment? = null
     private var templateFragment: TemplateFragment? = null
 
     init {
-        cameraFragment = CameraFragment.newInstance()
-        galeryFragment = GalleryFragment.newInstance()
+        cameraFragment = CameraFragment.newInstance(idSelected)
+        galeryFragment = GalleryFragment.newInstance(idSelected)
         templateFragment = TemplateFragment.newInstance()
     }
 

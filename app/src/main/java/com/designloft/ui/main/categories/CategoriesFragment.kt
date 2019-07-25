@@ -68,15 +68,18 @@ class CategoriesFragment : BaseFragment() {
         }
         viewSelectDesign.select_design_galery.setOnClickListener {
             SelectBackgroungActivity.start(activity!!, 1)
+            dialog.dismiss()
         }
         viewSelectDesign.select_design_ar.setOnClickListener {
-
+            dialog.dismiss()
         }
         viewSelectDesign.select_design_camera.setOnClickListener {
             SelectBackgroungActivity.start(activity!!, 0)
+            dialog.dismiss()
         }
         viewSelectDesign.select_design_template.setOnClickListener {
             SelectBackgroungActivity.start(activity!!, 2)
+            dialog.dismiss()
         }
 
         val options = RequestOptions()

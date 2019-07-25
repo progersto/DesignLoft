@@ -50,7 +50,6 @@ class MyDesignAdapter (
 
     class MyDesignViewHolder(itemView: View, val options: RequestOptions) : RecyclerView.ViewHolder(itemView) {
 
-
         fun updateItem(
             model: MyDesignEntity,
             context: Context,

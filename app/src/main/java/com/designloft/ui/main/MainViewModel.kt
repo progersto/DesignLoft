@@ -6,6 +6,7 @@ import com.designloft.database.entities.ProductEntity
 import com.designloft.models.Product
 
 class MainViewModel(private val dataManager: MainDataManager) : BaseViewModel() {
+    val roomsPhoto = dataManager.roomsPhoto
     val categories = dataManager.categories
     val products = dataManager.products
     val filteredProducts = dataManager.filteredProducts
@@ -37,5 +38,9 @@ class MainViewModel(private val dataManager: MainDataManager) : BaseViewModel() 
     override fun onCreateView() {
         super.onCreateView()
 
+    }
+
+    fun getRoomImagePhoto(){
+        dataManager.getRoomImagePhoto()
     }
 }

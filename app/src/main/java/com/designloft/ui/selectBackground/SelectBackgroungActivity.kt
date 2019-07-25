@@ -4,19 +4,13 @@ import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import androidx.core.content.ContextCompat
 import com.designloft.R
 import com.designloft.base.BaseActivity
-import com.designloft.base.BaseFragment
-import com.designloft.ui.main.MainViewModel
-import com.designloft.ui.main.NavigationAdapter
-import com.designloft.ui.main.categories.CategoriesFragment
-import com.designloft.ui.main.contacts.ContactsFragment
-import com.designloft.ui.main.product.ProductFragment
-import com.designloft.ui.main.profile.ProfileFragment
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.select_background_activity.*
+import kotlinx.android.synthetic.main.view_select_bg_bottom.*
 import kotlinx.android.synthetic.main.view_select_bg_bottom.view.*
-import org.koin.androidx.viewmodel.ext.android.viewModel
+import org.jetbrains.anko.textColor
 
 class SelectBackgroungActivity : BaseActivity() {
 
@@ -31,31 +25,52 @@ class SelectBackgroungActivity : BaseActivity() {
         }
     }
 
-    private val idSelected: Int by lazy {
-        intent.getIntExtra(SELECTED_ID, 0)
-    }
+    private val idSelected: Int by lazy { intent.getIntExtra(SELECTED_ID, 0) }
 
-    private val viewModel by viewModel<MainViewModel>()
     private var navigationAdapter: SelectBgNavigationAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.select_background_activity)
 
-//        viewModel.initDB()
-
-        navigationAdapter = SelectBgNavigationAdapter(supportFragmentManager)
+        navigationAdapter = SelectBgNavigationAdapter(supportFragmentManager, idSelected)
         select_navigation_view_pager.adapter = navigationAdapter
         select_navigation_view_pager.offscreenPageLimit = 2
 
         select_navigation_view_pager.currentItem = idSelected
+        when (idSelected) {
+            0 -> select_camera.textColor = ContextCompat.getColor(this, R.color.yellow)
+            1 -> select_galery.textColor = ContextCompat.getColor(this, R.color.yellow)
+            2 -> select_template.textColor = ContextCompat.getColor(this, R.color.yellow)
+        }
 
         bottom_menu.select_camera.setOnClickListener(myButtonClickListener)
         bottom_menu.select_galery.setOnClickListener(myButtonClickListener)
         bottom_menu.select_template.setOnClickListener(myButtonClickListener)
     }
 
-//    override fun onBackPressed() {
+    private var myButtonClickListener: View.OnClickListener = View.OnClickListener {
+        select_camera.textColor = ContextCompat.getColor(this, R.color.white)
+        select_galery.textColor = ContextCompat.getColor(this, R.color.white)
+        select_template.textColor = ContextCompat.getColor(this, R.color.white)
+
+        when (it.id) {
+            R.id.select_camera -> {
+                select_navigation_view_pager.currentItem = 0
+                select_camera.textColor = ContextCompat.getColor(this, R.color.yellow)
+            }
+            R.id.select_galery -> {
+                select_navigation_view_pager.currentItem = 1
+                select_galery.textColor = ContextCompat.getColor(this, R.color.yellow)
+            }
+            R.id.select_template -> {
+                select_navigation_view_pager.currentItem = 2
+                select_template.textColor = ContextCompat.getColor(this, R.color.yellow)
+            }
+        }
+    }
+
+    //    override fun onBackPressed() {
 //        val navigationFragment: BaseFragment? = navigationAdapter!!.getCurrentFragment()
 //
 //        if (navigationFragment is ContactsFragment) {
@@ -74,12 +89,4 @@ class SelectBackgroungActivity : BaseActivity() {
 //            super.onBackPressed()
 //        }
 //    }
-
-    var myButtonClickListener: View.OnClickListener = View.OnClickListener {
-        when (it.id) {
-            R.id.select_camera -> select_navigation_view_pager.currentItem = 0
-            R.id.select_galery -> select_navigation_view_pager.currentItem = 1
-            R.id.select_template -> select_navigation_view_pager.currentItem = 2
-        }
-    }
 }

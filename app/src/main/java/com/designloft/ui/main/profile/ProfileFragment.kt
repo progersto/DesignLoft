@@ -6,12 +6,11 @@ import android.view.View
 import android.view.ViewGroup
 import com.designloft.R
 import com.designloft.base.BaseFragment
-import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.profile.favorite.FavoriteFragment
 import com.designloft.ui.main.profile.myDesign.MyDesignFragment
+import com.designloft.utils.FragmentPagerAdapter
 import kotlinx.android.synthetic.main.fragment_profile.*
 import kotlinx.android.synthetic.main.view_toolbar.*
-import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class ProfileFragment : BaseFragment() {
 
@@ -36,7 +35,7 @@ class ProfileFragment : BaseFragment() {
     }
 
     private fun setupViewPager() {
-        val adapter = MyFragmentPagerAdapter(fragmentManager!!)
+        val adapter = FragmentPagerAdapter(fragmentManager!!)
 
         val favoriteFragment=  FavoriteFragment.newInstance()
         val myDesignFragment=  MyDesignFragment.newInstance()

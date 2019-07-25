@@ -4,14 +4,17 @@ import androidx.lifecycle.MutableLiveData
 import com.designloft.database.entities.ProductEntity
 import com.designloft.models.Category
 import com.designloft.models.Product
+import com.designloft.models.RoomImage
 import com.designloft.repository.ModelRepository
 import com.designloft.utils.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
+import java.util.ArrayList
 
 class MainDataManager(private val prefManager: PreferencesManager, private val modelRepository: ModelRepository) {
 
+    val roomsPhoto = MutableLiveData<MutableList<RoomImage>>().apply { value = null }
     val categories = MutableLiveData<MutableList<Category>>().apply { value = null }
     val products = SingleLiveEvent<MutableList<Product>>().apply { value = null }
     val filteredProducts = SingleLiveEvent<MutableList<Product>>().apply { value = null }
@@ -26,6 +29,19 @@ class MainDataManager(private val prefManager: PreferencesManager, private val m
             }
             getAllCategory()
         }
+    }
+
+    fun getRoomImagePhoto(){
+        val listCategory: ArrayList<RoomImage> = ArrayList()
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2019/04/1010-1-600x600.jpg", 2))
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2017/06/Modulnaya-kuhnya-Provans-600x600.jpg",2))
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2019/07/Modulnaya-stenka-Best-Beton-Belyiy-glyanets-600x600.jpg",1))
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2019/06/Modulnaya-stenka-Oslo-600x600.jpg",1))
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2019/07/Spalnya-Vesna-600x600.jpg",3))
+        listCategory.add(RoomImage("https://anisola-mebel.ru/wp-content/uploads/2019/06/Spalnyiy-garnitur-Rivera-1-600x600.jpg",3))
+        listCategory.add(RoomImage("http://newslab.ru/images/2016/oct/25/01_FullSize.jpg",4))
+        listCategory.add(RoomImage("http://housesdesign.ru/bundles/sitehouses/blog_covers/crop/big/75/db/72b6404e9ff9067fae71ff022178.jpg",4))
+        roomsPhoto.value = listCategory
     }
 
     fun getProductsByCategoryId(categoryId: Int) {

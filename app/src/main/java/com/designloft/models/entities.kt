@@ -27,3 +27,8 @@ data class ModelItem (
     val name: String = "",
     val link: String = ""
 )
+
+data class RoomImage(
+    var link: String,
+    val tab: Int
+)
