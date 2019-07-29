@@ -47,7 +47,6 @@ class AllRoomsFragment : BaseFragment() {
             .error(R.drawable.no_image)
         imageAdapter = ImageAdapter(options) {
             DressingRoomActivity.start(activity!!)
-//            Dddd.start(activity!!)
             viewModel.currentBackgroundImage.value = it
         }
 

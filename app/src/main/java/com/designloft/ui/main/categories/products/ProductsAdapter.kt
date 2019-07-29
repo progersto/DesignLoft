@@ -60,10 +60,14 @@ class ProductsAdapter(
             itemView.product_item_favorite.background = if (model.favorite) context.resources.getDrawable(R.drawable.star2) else context.resources.getDrawable(R.drawable.star_empty)
             itemView.product_sale.visibility = if (model.sale) View.VISIBLE else View.GONE
 
-            glide.load(model.imageList[0].imageLink)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .apply(options)
-                .into(itemView.product_item_image)
+            try {
+                glide.load(model.imageList[0].imageLink)
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .apply(options)
+                    .into(itemView.product_item_image)
+            }catch (e:IndexOutOfBoundsException){
+                itemView.product_item_image.setImageResource(R.drawable.no_image)
+            }
         }
     }
 }

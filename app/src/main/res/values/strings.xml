@@ -46,6 +46,8 @@
     <string name="inventory_sum">Общая сумма:</string>
     <string name="inventory_hint">Добавьте первые элементы дизайна, перейдя на вкладку "каталог"</string>
 
+    <string name="catalog_detail">Детали</string>
+
 
 
 </resources>

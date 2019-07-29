@@ -7,7 +7,6 @@ import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.view.ViewCompat
 import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.ui.main.MainViewModel
@@ -42,7 +41,7 @@ class MainDressingRoomFragment : BaseFragment() {
         activity!!.text_toolbar.visibility = View.GONE
 
         dressing_inventory.setOnClickListener {
-            val sharedElementFragment2 = InventaryFragment.newInstance()
+            val inventoryFragment = InventoryFragment.newInstance()
 
             val slideTransition = Slide(Gravity.BOTTOM)
             slideTransition.duration = 600
@@ -50,12 +49,29 @@ class MainDressingRoomFragment : BaseFragment() {
             val changeBoundsTransition = ChangeBounds()
             changeBoundsTransition.duration = 600
 
-            sharedElementFragment2.enterTransition = slideTransition
-            sharedElementFragment2.allowEnterTransitionOverlap = true
-            sharedElementFragment2.allowReturnTransitionOverlap = true
-            sharedElementFragment2.sharedElementEnterTransition = changeBoundsTransition
+            inventoryFragment.enterTransition = slideTransition
+            inventoryFragment.allowEnterTransitionOverlap = true
+            inventoryFragment.allowReturnTransitionOverlap = true
+            inventoryFragment.sharedElementEnterTransition = changeBoundsTransition
 
-            replaceFragmentWithSharedElement(sharedElementFragment2, R.id.dressing_room_container, TAG, dressing_back_ground_image)
+            replaceFragmentWithSharedElement(inventoryFragment, R.id.dressing_room_container, TAG, dressing_back_ground_image)
+        }
+
+        dressing_catalog.setOnClickListener {
+            val dressingCatalogFragment = DressingCatalogFragment.newInstance()
+
+            val slideTransition = Slide(Gravity.BOTTOM)
+            slideTransition.duration = 600
+
+            val changeBoundsTransition = ChangeBounds()
+            changeBoundsTransition.duration = 600
+
+            dressingCatalogFragment.enterTransition = slideTransition
+            dressingCatalogFragment.allowEnterTransitionOverlap = true
+            dressingCatalogFragment.allowReturnTransitionOverlap = true
+            dressingCatalogFragment.sharedElementEnterTransition = changeBoundsTransition
+
+            replaceFragmentWithSharedElement(dressingCatalogFragment, R.id.dressing_room_container, TAG, dressing_back_ground_image)
         }
     }
 }

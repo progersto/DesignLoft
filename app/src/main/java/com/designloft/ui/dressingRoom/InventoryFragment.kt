@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.Observer
 import com.designloft.R
 import com.designloft.base.BaseFragment
 import com.designloft.ui.main.MainViewModel
@@ -12,13 +11,13 @@ import kotlinx.android.synthetic.main.fragment_inventory.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
-class InventaryFragment : BaseFragment() {
+class InventoryFragment : BaseFragment() {
     private val viewModel by sharedViewModel<MainViewModel>()
 
     companion object {
-        const val TAG = "InventaryFragment"
+        const val TAG = "InventoryFragment"
 
-        fun newInstance() = InventaryFragment().apply {
+        fun newInstance() = InventoryFragment().apply {
             arguments = Bundle().apply {
                 //                    putInt("pos", id)
             }

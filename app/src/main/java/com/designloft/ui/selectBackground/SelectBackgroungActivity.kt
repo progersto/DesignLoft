@@ -69,24 +69,4 @@ class SelectBackgroungActivity : BaseActivity() {
             }
         }
     }
-
-    //    override fun onBackPressed() {
-//        val navigationFragment: BaseFragment? = navigationAdapter!!.getCurrentFragment()
-//
-//        if (navigationFragment is ContactsFragment) {
-//            finish()
-//        }
-//        if (navigationFragment is ProfileFragment) {
-//            val listFragments = supportFragmentManager.fragments.filter { frag -> frag.isVisible }
-//            val fragment = listFragments[listFragments.size - 1]
-//            if (fragment is ProductFragment) {
-//                super.onBackPressed()
-//            } else {
-//                finish()
-//            }
-//        }
-//        if (navigationFragment is CategoriesFragment) {
-//            super.onBackPressed()
-//        }
-//    }
 }

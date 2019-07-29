@@ -12,7 +12,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.models.RoomImage
-import kotlinx.android.synthetic.main.view_image_room.view.*
+import kotlinx.android.synthetic.main.item_image_room.view.*
 
 class ImageAdapter (
     private val options: RequestOptions,
@@ -25,7 +25,7 @@ class ImageAdapter (
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
         context = parent.context
         return ImageViewHolder(
-            LayoutInflater.from(context).inflate(R.layout.view_image_room, parent, false)
+            LayoutInflater.from(context).inflate(R.layout.item_image_room, parent, false)
             , options
         )
     }
