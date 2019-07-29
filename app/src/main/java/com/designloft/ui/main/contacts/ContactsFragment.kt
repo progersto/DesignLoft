@@ -26,7 +26,5 @@ class ContactsFragment: BaseFragment() {
 
         text_toolbar.text = resources.getString(R.string.contacts_toolbar)
         back_btn.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
     }
 }

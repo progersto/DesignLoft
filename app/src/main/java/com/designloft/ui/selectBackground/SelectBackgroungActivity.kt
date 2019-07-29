@@ -7,7 +7,7 @@ import android.view.View
 import androidx.core.content.ContextCompat
 import com.designloft.R
 import com.designloft.base.BaseActivity
-import kotlinx.android.synthetic.main.select_background_activity.*
+import kotlinx.android.synthetic.main.activity_select_background.*
 import kotlinx.android.synthetic.main.view_select_bg_bottom.*
 import kotlinx.android.synthetic.main.view_select_bg_bottom.view.*
 import org.jetbrains.anko.textColor
@@ -31,7 +31,7 @@ class SelectBackgroungActivity : BaseActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.select_background_activity)
+        setContentView(R.layout.activity_select_background)
 
         navigationAdapter = SelectBgNavigationAdapter(supportFragmentManager, idSelected)
         select_navigation_view_pager.adapter = navigationAdapter

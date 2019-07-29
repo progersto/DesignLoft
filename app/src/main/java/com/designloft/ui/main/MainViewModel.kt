@@ -13,6 +13,7 @@ class MainViewModel(private val dataManager: MainDataManager) : BaseViewModel() 
     val product = dataManager.product
     val favorites = dataManager.favorites
     val isGeneralList = dataManager.isGeneralList
+    val currentBackgroundImage =  dataManager.currentBackgroundImage
 
 
     fun initDB() {

@@ -1,6 +1,7 @@
 package com.designloft.ui.selectBackground.tampletes
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,7 +16,7 @@ import kotlinx.android.synthetic.main.view_image_room.view.*
 
 class ImageAdapter (
     private val options: RequestOptions,
-    private val clickListener: () -> Unit
+    private val clickListener: (Drawable) -> Unit
 ) : RecyclerView.Adapter<ImageAdapter.ImageViewHolder>() {
 
     private val list = ArrayList<RoomImage>()
@@ -33,7 +34,9 @@ class ImageAdapter (
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int ) {
         holder.updateItem(list[position], Glide.with(context))
-        holder.itemView.setOnClickListener { clickListener() }
+        holder.itemView.setOnClickListener {
+            it.my_room_item_image.drawable
+            clickListener(it.my_room_item_image.drawable) }
     }
 
     fun setItems(entities: MutableList<RoomImage>) {

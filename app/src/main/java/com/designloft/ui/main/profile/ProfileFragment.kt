@@ -30,8 +30,6 @@ class ProfileFragment : BaseFragment() {
 
         setupViewPager()
         back_btn.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
     }
 
     private fun setupViewPager() {

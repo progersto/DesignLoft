@@ -56,8 +56,6 @@ class ProductFragment : BaseFragment() {
             viewModel.getProductByyId(it)
         }
 
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
         text_toolbar.text = productName
         activity!!.bottom_navigation.visibility = View.GONE
         back_btn.setOnClickListener {

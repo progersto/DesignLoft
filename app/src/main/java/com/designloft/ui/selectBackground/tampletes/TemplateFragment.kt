@@ -33,8 +33,6 @@ class TemplateFragment: BaseFragment() {
         setupViewPager()
         back_btn.visibility = View.VISIBLE
         text_toolbar.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
 
         back_btn.setOnClickListener { activity?.onBackPressed() }
 

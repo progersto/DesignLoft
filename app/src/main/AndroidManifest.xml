@@ -37,6 +37,8 @@
         </activity>
 
         <activity android:name=".ui.selectBackground.SelectBackgroungActivity"/>
+        <activity android:name=".ui.dressingRoom.DressingRoomActivity"/>
+        <activity android:name=".ui.dressingRoom.Dddd"/>
 
         <provider
                 android:name="androidx.core.content.FileProvider"

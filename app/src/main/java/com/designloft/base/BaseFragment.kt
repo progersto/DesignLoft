@@ -2,14 +2,16 @@ package com.designloft.base
 
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.View
+import android.widget.ImageView
+import androidx.core.view.ViewCompat
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LifecycleRegistry
 import com.designloft.R
+import com.designloft.ui.dressingRoom.InventaryFragment
+import kotlinx.android.synthetic.main.fragment_main_dressing_room.*
 
 abstract class BaseFragment : Fragment() {
 
@@ -68,6 +70,19 @@ abstract class BaseFragment : Fragment() {
             .beginTransaction()
             .replace(android.R.id.content, fragment)
             .addToBackStack(null)
+            .commit()
+    }
+
+    protected fun replaceFragmentWithSharedElement(
+        fragment: InventaryFragment,
+        dressingRoomContainer: Int,
+        tag: String,
+        view: View
+    ) {
+        activity!!.supportFragmentManager.beginTransaction()
+            .replace(dressingRoomContainer, fragment)
+            .addToBackStack(tag)
+            .addSharedElement(view, ViewCompat.getTransitionName(view)!!)
             .commit()
     }
 

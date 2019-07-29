@@ -1,5 +1,6 @@
 package com.designloft.data
 
+import android.graphics.drawable.Drawable
 import androidx.lifecycle.MutableLiveData
 import com.designloft.database.entities.ProductEntity
 import com.designloft.models.Category
@@ -21,6 +22,7 @@ class MainDataManager(private val prefManager: PreferencesManager, private val m
     val favorites = MutableLiveData<MutableList<Product>>().apply { value = null }
     val product = SingleLiveEvent<Product>().apply { value = null }
     val isGeneralList = SingleLiveEvent<Boolean>().apply { value = true }
+    val currentBackgroundImage = SingleLiveEvent<Drawable>().apply { value = null }
 
     fun initDB() {
         GlobalScope.launch(Dispatchers.Main) {

@@ -54,8 +54,6 @@ class CategoriesFragment : BaseFragment() {
 
         text_toolbar.text = resources.getString(R.string.app_name)
         back_btn.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
 
         viewSelectDesign = View.inflate(context, R.layout.fragment_select_design, null)
         create_design.setOnClickListener {

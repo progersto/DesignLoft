@@ -74,6 +74,15 @@ abstract class BaseActivity : AppCompatActivity(){
             .commit()
     }
 
+    protected fun showFragment(fragment: BaseFragment, idContainer: Int, tag: String){
+        currentFragment = fragment
+        supportFragmentManager
+            .beginTransaction()
+            .replace(idContainer, fragment)
+            .addToBackStack(tag)
+            .commit()
+    }
+
     protected fun hideKeyboard() {
         val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow(window?.currentFocus?.windowToken, 0)

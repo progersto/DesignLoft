@@ -9,9 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import com.designloft.R
 import com.designloft.base.BaseFragment
+import com.designloft.ui.dressingRoom.DressingRoomActivity
+import com.designloft.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_galery.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.jetbrains.anko.support.v4.toast
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class GalleryFragment : BaseFragment() {
 
@@ -29,6 +32,7 @@ class GalleryFragment : BaseFragment() {
         }
     }
 
+    private val viewModel by sharedViewModel<MainViewModel>()
     private val idSelected by lazy { arguments?.getInt(SELECTED_ID) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -40,16 +44,15 @@ class GalleryFragment : BaseFragment() {
 
         back_btn.visibility = View.VISIBLE
         text_toolbar.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
 
         if (idSelected == 1) {
             openDefaultCamera()
         }
 
-        select_photo.setOnClickListener { openDefaultCamera() }
+        dressing_bottom_menu.setOnClickListener { openDefaultCamera() }
         complete.setOnClickListener {
-
+            DressingRoomActivity.start(activity!!)
+            viewModel.currentBackgroundImage.value = gallery_image.drawable
         }
         back_btn.setOnClickListener { activity?.onBackPressed() }
     }

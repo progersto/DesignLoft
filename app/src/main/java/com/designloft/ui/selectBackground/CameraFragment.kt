@@ -12,15 +12,17 @@ import android.view.ViewGroup
 import androidx.core.content.FileProvider
 import com.designloft.R
 import com.designloft.base.BaseFragment
+import com.designloft.ui.dressingRoom.DressingRoomActivity
+import com.designloft.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_camera.*
 import kotlinx.android.synthetic.main.view_toolbar.*
 import org.jetbrains.anko.support.v4.toast
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.*
 
 class CameraFragment : BaseFragment() {
-    protected var mCurrentPhotoPath = ""
 
     companion object {
         const val TAG = "CameraFragment"
@@ -35,7 +37,9 @@ class CameraFragment : BaseFragment() {
         }
     }
 
+    private val viewModel by sharedViewModel<MainViewModel>()
     private val idSelected by lazy { arguments?.getInt(SELECTED_ID) }
+    protected var mCurrentPhotoPath = ""
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         return inflater.inflate(R.layout.fragment_camera, container, false)
@@ -46,8 +50,6 @@ class CameraFragment : BaseFragment() {
 
         back_btn.visibility = View.VISIBLE
         text_toolbar.visibility = View.GONE
-        filter_btn.visibility = View.GONE
-        search_btn.visibility = View.GONE
 
         if (idSelected == 0) {
             openDefaultCamera()
@@ -55,7 +57,8 @@ class CameraFragment : BaseFragment() {
 
         new_photo.setOnClickListener { openDefaultCamera() }
         complete.setOnClickListener {
-
+            DressingRoomActivity.start(activity!!)
+            viewModel.currentBackgroundImage.value = camera_image.drawable
         }
         back_btn.setOnClickListener { activity?.onBackPressed() }
     }

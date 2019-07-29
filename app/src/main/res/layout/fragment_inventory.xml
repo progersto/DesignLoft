@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <ImageView
+            android:id="@+id/dressing_back_ground_image"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:src="@drawable/star2"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:transitionName="transName"
+            tools:ignore="ContentDescription"
+            app:layout_constraintBottom_toTopOf="@+id/linearLayout"/>
+
+    <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:background="@color/background_light_grey"
+            android:orientation="vertical"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:id="@+id/linearLayout">
+
+        <LinearLayout
+                android:id="@+id/inventory_title_view"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@color/light_yellow"
+                android:orientation="horizontal"
+                app:layout_constraintTop_toBottomOf="@+id/dressing_back_ground_image"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintBottom_toBottomOf="@+id/inventory_title">
+
+            <TextView
+                    android:id="@+id/inventory_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/inventory_title"
+                    android:textColor="@color/black"
+                    android:textStyle="bold"
+                    android:textSize="18sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/dressing_back_ground_image"/>
+
+            <TextView
+                    android:id="@+id/inventory_sum"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/inventory_sum"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:visibility="visible"
+                    android:padding="8dp"
+                    app:layout_constraintTop_toBottomOf="@+id/dressing_back_ground_image"
+                    app:layout_constraintStart_toEndOf="@+id/inventory_title"
+                    android:layout_marginStart="16dp"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/inventory_adapter"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                android:visibility="gone"
+                android:layout_margin="8dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inventory_title"/>
+
+        <TextView
+                android:id="@+id/inventory_hint"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/inventory_hint"
+                android:textSize="18sp"
+                android:visibility="visible"
+                android:gravity="center"
+                android:textColor="@color/selector_clickable_text_color"
+                android:layout_margin="20dp"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/inventory_title_view"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

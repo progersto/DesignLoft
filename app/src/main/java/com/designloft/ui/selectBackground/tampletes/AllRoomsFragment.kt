@@ -1,7 +1,6 @@
 package com.designloft.ui.selectBackground.tampletes
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +9,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
 import com.designloft.R
 import com.designloft.base.BaseFragment
+import com.designloft.ui.dressingRoom.DressingRoomActivity
 import com.designloft.ui.main.MainViewModel
 import kotlinx.android.synthetic.main.fragment_products.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
@@ -46,7 +46,9 @@ class AllRoomsFragment : BaseFragment() {
             .fitCenter()
             .error(R.drawable.no_image)
         imageAdapter = ImageAdapter(options) {
-            Log.d("ddddd", " dddd")
+            DressingRoomActivity.start(activity!!)
+//            Dddd.start(activity!!)
+            viewModel.currentBackgroundImage.value = it
         }
 
         products_adapter.adapter = imageAdapter

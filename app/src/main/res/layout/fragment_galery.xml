@@ -26,7 +26,7 @@
             tools:ignore="ContentDescription"/>
 
     <TextView
-            android:id="@+id/select_photo"
+            android:id="@+id/dressing_bottom_menu"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
