@@ -87,12 +87,12 @@ class ProductFragment : BaseFragment() {
                 fragment_product_old_price.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
                 fragment_product_buy_btn.setOnClickListener { }
                 fragment_product_measure.setOnClickListener { }
-                height.fragment_product_size_data.text = product.height.roundOffDecimalOne()
-                width.fragment_product_size_data.text = product.width.roundOffDecimalOne()
-                length.fragment_product_size_data.text = product.length.roundOffDecimalOne()
-                height.fragment_product_size_title.text = resources.getString(R.string.product_size_title_height)
-                width.fragment_product_size_title.text = resources.getString(R.string.product_size_title_width)
-                length.fragment_product_size_title.text = resources.getString(R.string.product_size_title_length)
+                fragment_product_height.fragment_product_size_data.text = product.height.roundOffDecimalOne()
+                fragment_product_width.fragment_product_size_data.text = product.width.roundOffDecimalOne()
+                fragment_product_length.fragment_product_size_data.text = product.length.roundOffDecimalOne()
+                fragment_product_height.fragment_product_size_title.text = resources.getString(R.string.product_size_title_height)
+                fragment_product_width.fragment_product_size_title.text = resources.getString(R.string.product_size_title_width)
+                fragment_product_length.fragment_product_size_title.text = resources.getString(R.string.product_size_title_length)
                 fragment_product_description.text = product.description
 
                 productsAdapter.setItems(product.imageList)

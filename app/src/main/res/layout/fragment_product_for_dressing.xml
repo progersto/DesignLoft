@@ -175,51 +175,19 @@
             app:layout_constraintStart_toStartOf="@+id/fragment_product_photo_adapter"
             app:layout_constraintTop_toBottomOf="@+id/fragment_product_container_size"/>
 
-    <ScrollView
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginEnd="8dp"
-            app:layout_constraintStart_toStartOf="@+id/fragment_product_photo_adapter"
-            app:layout_constraintEnd_toEndOf="@+id/fragment_product_photo_adapter"
-            app:layout_constraintTop_toBottomOf="@+id/fragment_product_title_description"
-            app:layout_constraintBottom_toTopOf="@+id/fragment_product_measure">
-
-        <TextView
-                android:id="@+id/fragment_product_description"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                tools:text="@string/product_title_description"
-                android:textSize="15sp"
-                android:textColor="@color/black"
-              />
-
-    </ScrollView>
-
-
-
-    <LinearLayout
-            android:id="@+id/fragment_product_measure"
+    <TextView
+            android:id="@+id/fragment_product_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/black_btn"
-            android:gravity="center"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="?attr/actionBarSize"
-                android:background="@color/black_btn"
-                android:text="Примерить"
-                android:drawableStart="@drawable/ic_measure"
-                android:drawablePadding="8dp"
-                android:textSize="19sp"
-                android:gravity="center"
-                android:textColor="@color/white"/>
-
-    </LinearLayout>
-
+            tools:text="@string/product_title_description"
+            android:textSize="15sp"
+            android:textColor="@color/black"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="5dp"
+            android:paddingBottom="8dp"
+            app:layout_constraintStart_toStartOf="@+id/fragment_product_photo_adapter"
+            app:layout_constraintEnd_toEndOf="@+id/fragment_product_photo_adapter"
+            app:layout_constraintTop_toBottomOf="@+id/fragment_product_title_description"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,12 +1,17 @@
 package com.designloft.ui.dressingRoom
 
 import android.content.Context
+import android.graphics.Paint
 import android.os.Bundle
+import android.text.method.ScrollingMovementMethod
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Scroller
+import android.widget.TextView
+import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -16,11 +21,20 @@ import com.designloft.models.Category
 import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsListener
+import com.designloft.ui.main.product.ProductPhotoAdapter
+import com.designloft.utils.roundOffDecimal
+import com.designloft.utils.roundOffDecimalOne
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_catalog_container.*
 import kotlinx.android.synthetic.main.fragment_catalog_container.dressing_back_ground_image
+import kotlinx.android.synthetic.main.fragment_catalog_container.include_toolbar
+import kotlinx.android.synthetic.main.fragment_product.*
+import kotlinx.android.synthetic.main.fragment_product.view.*
+import kotlinx.android.synthetic.main.item_product_size.view.*
 import kotlinx.android.synthetic.main.view_toolbar.view.*
+import kotlinx.android.synthetic.main.view_toolbar.view.back_btn
+import kotlinx.android.synthetic.main.view_toolbar.view.text_toolbar
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DressingCatalogFragment : BaseFragment() {
@@ -86,8 +100,62 @@ class DressingCatalogFragment : BaseFragment() {
 
     private val productsListener = object : ProductsListener {
         override fun onItemFavorite(product: Product) {
-//                viewModel.updateProductFavorite(product)
-            Log.d("fff", "gg")
+            val dialogView = View.inflate(context, R.layout.fragment_product_for_dressing, null)
+
+            val textView = dialogView.findViewById(R.id.fragment_product_description) as TextView
+            textView.maxLines = 10
+            textView.setScroller(Scroller(context))
+            textView.isVerticalScrollBarEnabled = true
+            textView.movementMethod = ScrollingMovementMethod()
+
+            val dialog = AlertDialog.Builder(activity as Context)
+                .setView(dialogView)
+                .show()
+
+            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
+
+            dialogView.text_toolbar.text = product.name
+            dialogView.back_btn.setOnClickListener { dialog.dismiss() }
+
+            val options = RequestOptions()
+                .override(300, 300)
+                .diskCacheStrategy(DiskCacheStrategy.ALL)
+                .fitCenter()
+                .error(R.drawable.no_image)
+            val productsAdapter = ProductPhotoAdapter(options) { photo ->
+                Log.d("ddddd", " dddd")
+            }
+            dialogView.fragment_product_photo_adapter.adapter = productsAdapter
+                product?.also {
+                    dialogView.fragment_product_sale.visibility = if (product.sale) View.VISIBLE else View.GONE
+                    dialogView.fragment_product_favorite.isChecked = product.favorite
+                    dialogView.fragment_product_favorite.setOnCheckedChangeListener { _, isChecked ->
+                        viewModel.updateProductFavorite(it.copy(favorite = isChecked))
+                    }
+                    dialogView.fragment_product_old_price.visibility =
+                        if (product.oldPrice > 0) View.VISIBLE else View.GONE
+                    val price = "${product.price.roundOffDecimal()} $"
+                    dialogView.fragment_product_price.text = price
+                    val oldPrice = "${product.oldPrice.roundOffDecimal()} $"
+                    dialogView.fragment_product_old_price.text = oldPrice
+                    dialogView.fragment_product_old_price.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
+                    dialogView.fragment_product_buy_btn.setOnClickListener { }
+                    dialogView.fragment_product_height.fragment_product_size_data.text =
+                        product.height.roundOffDecimalOne()
+                    dialogView.fragment_product_width.fragment_product_size_data.text =
+                        product.width.roundOffDecimalOne()
+                    dialogView.fragment_product_length.fragment_product_size_data.text =
+                        product.length.roundOffDecimalOne()
+                    dialogView.fragment_product_height.fragment_product_size_title.text =
+                        resources.getString(R.string.product_size_title_height)
+                    dialogView.fragment_product_width.fragment_product_size_title.text =
+                        resources.getString(R.string.product_size_title_width)
+                    dialogView.fragment_product_length.fragment_product_size_title.text =
+                        resources.getString(R.string.product_size_title_length)
+                    dialogView.fragment_product_description.text = product.description
+
+                    productsAdapter.setItems(product.imageList)
+                }
         }
 
         override fun onItemClick(product: Product) {
@@ -153,7 +221,7 @@ class DressingCatalogFragment : BaseFragment() {
         }.toMutableList()
     }
 
-    private fun getFavoriteList(){
+    private fun getFavoriteList() {
         viewModel.getFavorites()
         viewModel.favorites.value?.also {
             productListFavorite.clear()
