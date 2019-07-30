@@ -1,17 +1,14 @@
 package com.designloft.ui.dressingRoom
 
 import android.content.Context
-import android.graphics.Paint
 import android.os.Bundle
-import android.text.method.ScrollingMovementMethod
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
-import android.widget.Scroller
-import android.widget.TextView
-import androidx.appcompat.app.AlertDialog
 import androidx.lifecycle.Observer
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.request.RequestOptions
@@ -21,20 +18,11 @@ import com.designloft.models.Category
 import com.designloft.models.Product
 import com.designloft.ui.main.MainViewModel
 import com.designloft.ui.main.categories.products.ProductsListener
-import com.designloft.ui.main.product.ProductPhotoAdapter
-import com.designloft.utils.roundOffDecimal
-import com.designloft.utils.roundOffDecimalOne
+import com.designloft.ui.main.product.FilterDialogFragment
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayout.OnTabSelectedListener
 import kotlinx.android.synthetic.main.fragment_catalog_container.*
-import kotlinx.android.synthetic.main.fragment_catalog_container.dressing_back_ground_image
-import kotlinx.android.synthetic.main.fragment_catalog_container.include_toolbar
-import kotlinx.android.synthetic.main.fragment_product.*
-import kotlinx.android.synthetic.main.fragment_product.view.*
-import kotlinx.android.synthetic.main.item_product_size.view.*
-import kotlinx.android.synthetic.main.view_toolbar.view.*
-import kotlinx.android.synthetic.main.view_toolbar.view.back_btn
-import kotlinx.android.synthetic.main.view_toolbar.view.text_toolbar
+import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 
 class DressingCatalogFragment : BaseFragment() {
@@ -62,10 +50,9 @@ class DressingCatalogFragment : BaseFragment() {
         imm = activity!!.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
 
         dressing_back_ground_image.setImageDrawable(viewModel.currentBackgroundImage.value)
-        include_toolbar.text_toolbar.visibility = View.GONE
-        include_toolbar.back_btn.visibility = View.GONE
-        include_toolbar.filter_btn.visibility = View.VISIBLE
-        include_toolbar.search_btn.visibility = View.VISIBLE
+        activity!!.filter_btn.visibility = View.VISIBLE
+        activity!!.search_btn.visibility = View.VISIBLE
+        activity!!.back_btn.setOnClickListener { activity?.onBackPressed() }
 
         setupMainTab()
 
@@ -79,7 +66,6 @@ class DressingCatalogFragment : BaseFragment() {
 
         catalogProductAdapter = CatalogProductAdapter(options, productsListener)
         products_adapter.adapter = catalogProductAdapter
-
 
         viewModel.getProductsByCategoryId(1)
         viewModel.products.observe(viewLifecycleOwner, Observer { list ->
@@ -96,66 +82,13 @@ class DressingCatalogFragment : BaseFragment() {
                 viewModel.isGeneralList.value = false
             }
         })
+
+        initToolBar()
     }
 
     private val productsListener = object : ProductsListener {
         override fun onItemFavorite(product: Product) {
-            val dialogView = View.inflate(context, R.layout.fragment_product_for_dressing, null)
-
-            val textView = dialogView.findViewById(R.id.fragment_product_description) as TextView
-            textView.maxLines = 10
-            textView.setScroller(Scroller(context))
-            textView.isVerticalScrollBarEnabled = true
-            textView.movementMethod = ScrollingMovementMethod()
-
-            val dialog = AlertDialog.Builder(activity as Context)
-                .setView(dialogView)
-                .show()
-
-            dialog.window?.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
-
-            dialogView.text_toolbar.text = product.name
-            dialogView.back_btn.setOnClickListener { dialog.dismiss() }
-
-            val options = RequestOptions()
-                .override(300, 300)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .fitCenter()
-                .error(R.drawable.no_image)
-            val productsAdapter = ProductPhotoAdapter(options) { photo ->
-                Log.d("ddddd", " dddd")
-            }
-            dialogView.fragment_product_photo_adapter.adapter = productsAdapter
-                product?.also {
-                    dialogView.fragment_product_sale.visibility = if (product.sale) View.VISIBLE else View.GONE
-                    dialogView.fragment_product_favorite.isChecked = product.favorite
-                    dialogView.fragment_product_favorite.setOnCheckedChangeListener { _, isChecked ->
-                        viewModel.updateProductFavorite(it.copy(favorite = isChecked))
-                    }
-                    dialogView.fragment_product_old_price.visibility =
-                        if (product.oldPrice > 0) View.VISIBLE else View.GONE
-                    val price = "${product.price.roundOffDecimal()} $"
-                    dialogView.fragment_product_price.text = price
-                    val oldPrice = "${product.oldPrice.roundOffDecimal()} $"
-                    dialogView.fragment_product_old_price.text = oldPrice
-                    dialogView.fragment_product_old_price.paintFlags = Paint.STRIKE_THRU_TEXT_FLAG
-                    dialogView.fragment_product_buy_btn.setOnClickListener { }
-                    dialogView.fragment_product_height.fragment_product_size_data.text =
-                        product.height.roundOffDecimalOne()
-                    dialogView.fragment_product_width.fragment_product_size_data.text =
-                        product.width.roundOffDecimalOne()
-                    dialogView.fragment_product_length.fragment_product_size_data.text =
-                        product.length.roundOffDecimalOne()
-                    dialogView.fragment_product_height.fragment_product_size_title.text =
-                        resources.getString(R.string.product_size_title_height)
-                    dialogView.fragment_product_width.fragment_product_size_title.text =
-                        resources.getString(R.string.product_size_title_width)
-                    dialogView.fragment_product_length.fragment_product_size_title.text =
-                        resources.getString(R.string.product_size_title_length)
-                    dialogView.fragment_product_description.text = product.description
-
-                    productsAdapter.setItems(product.imageList)
-                }
+            ProductDetailsFragment.newInstance(product).show(fragmentManager, ProductDetailsFragment.TAG)
         }
 
         override fun onItemClick(product: Product) {
@@ -165,23 +98,35 @@ class DressingCatalogFragment : BaseFragment() {
     }
 
     private fun setupMainTab() {
-        catalog_tabs.addTab(catalog_tabs.newTab().setText("Каталог"))
-        catalog_tabs.addTab(catalog_tabs.newTab().setText("Избранное"))
-        catalog_tabs.addTab(catalog_tabs.newTab().setText("Мой декор"))
+        catalog_tabs.addTab(catalog_tabs.newTab().setText(resources.getString(R.string.dressing_catalog)))
+        catalog_tabs.addTab(catalog_tabs.newTab().setText(resources.getString(R.string.dressing_favorite)))
+        catalog_tabs.addTab(catalog_tabs.newTab().setText(resources.getString(R.string.dressing_my_decor)))
 
         val lis = object : OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
 
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 when (tab?.position) {
-                    0 -> viewModel.getProductsByCategoryId(catalog_tabs_categories.selectedTabPosition + 1)
-                    1 -> getFavoriteList()
-                    2 -> TODO() //мой декор
+                    0 -> {
+                        viewModel.getProductsByCategoryId(catalog_tabs_categories.selectedTabPosition + 1)
+                        activity!!.filter_btn.visibility = View.VISIBLE
+                        activity!!.search_btn.visibility = View.VISIBLE
+                    }
+                    1 -> {
+                        getFavoriteList()
+                        hideSearch()
+                        activity!!.filter_btn.visibility = View.GONE
+                        activity!!.search_btn.visibility = View.GONE
+                        imm.hideSoftInputFromWindow(activity!!.searchText.windowToken, 0)
+                    }
+                    2 -> {
+                        hideSearch()
+                        activity!!.filter_btn.visibility = View.GONE
+                        activity!!.search_btn.visibility = View.GONE
+                        imm.hideSoftInputFromWindow(activity!!.searchText.windowToken, 0)
+                    }
                 }
             }
         }
@@ -196,12 +141,9 @@ class DressingCatalogFragment : BaseFragment() {
         }
 
         val lis = object : OnTabSelectedListener {
-            override fun onTabReselected(p0: TabLayout.Tab?) {
+            override fun onTabReselected(p0: TabLayout.Tab?) {}
 
-            }
-
-            override fun onTabUnselected(p0: TabLayout.Tab?) {
-            }
+            override fun onTabUnselected(p0: TabLayout.Tab?) {}
 
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 tab?.also {
@@ -229,5 +171,52 @@ class DressingCatalogFragment : BaseFragment() {
 
             catalogProductAdapter.setItems(sortFavoriteList())
         }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun onTextChanged(searchText: CharSequence, start: Int, before: Int, count: Int) {
+            val newList = productListCatalog.filter { searchText in it.name.toLowerCase() }.toMutableList()
+            catalogProductAdapter.setItems(newList)
+        }
+
+        override fun beforeTextChanged(s: CharSequence, start: Int, count: Int, after: Int) {}
+        override fun afterTextChanged(s: Editable) {}
+    }
+
+    private fun initToolBar() {
+        activity!!.search_btn.setOnClickListener {
+            activity!!.back_btn.visibility = View.GONE
+            activity!!.search_btn.visibility = View.GONE
+            activity!!.filter_btn.visibility = View.GONE
+            activity!!.searchText.visibility = View.VISIBLE
+            activity!!.filter_close.visibility = View.VISIBLE
+            activity!!.searchText.requestFocus()
+            activity!!.searchText.addTextChangedListener(textWatcher)
+        }
+        activity!!.searchText.setOnFocusChangeListener { v, hasFocus ->
+            if (hasFocus) {
+                imm.toggleSoftInput(InputMethodManager.SHOW_FORCED, 0)
+            } else {
+                imm.hideSoftInputFromWindow(activity!!.searchText.windowToken, 0)
+            }
+        }
+        activity!!.filter_close.setOnClickListener { hideSearch() }
+        activity!!.filter_btn.setOnClickListener {
+            replaceFragmentInIdContent(FilterDialogFragment.newInstance(catalog_tabs_categories.selectedTabPosition))
+        }
+    }
+
+    private fun hideSearch(){
+        activity!!.search_btn.visibility = View.VISIBLE
+        activity!!.filter_btn.visibility = View.VISIBLE
+        activity!!.back_btn.visibility = View.VISIBLE
+        activity!!.searchText.visibility = View.GONE
+        activity!!.filter_close.visibility = View.GONE
+        activity!!.searchText.setText("")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        imm.hideSoftInputFromWindow(activity!!.searchText.windowToken, 0)
     }
 }

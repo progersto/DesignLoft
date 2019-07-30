@@ -20,4 +20,3 @@ data class PhotoProductEntity (
     var imageLink: String = ""
 
 )
-

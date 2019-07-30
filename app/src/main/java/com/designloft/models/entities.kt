@@ -1,6 +1,8 @@
 package com.designloft.models
 
 import com.designloft.database.entities.PhotoProductEntity
+import java.io.Serializable
+
 
 data class Product(
     val id: Int = 0,
@@ -15,7 +17,7 @@ data class Product(
     val width: Double = 0.0,
     val length: Double = 0.0,
     val categoryId: Int = 0
-)
+) :  Serializable
 
 data class Category(
     val id: Int = 0,

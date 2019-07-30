@@ -45,7 +45,9 @@ class FilterDialogFragment : BaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        activity!!.bottom_navigation.visibility = View.GONE
+        activity!!.bottom_navigation?.also {
+            it.visibility = View.GONE
+        }
         viewModel.products.value?.also {
             filtredProductList.addAll(it)
         }
@@ -196,6 +198,8 @@ class FilterDialogFragment : BaseFragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        activity!!.bottom_navigation.visibility = View.VISIBLE
+        activity!!.bottom_navigation?.also {
+            it.visibility = View.VISIBLE
+        }
     }
 }

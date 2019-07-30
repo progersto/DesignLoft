@@ -64,6 +64,9 @@ class ProductsFragment : BaseFragment() {
 
         back_btn.setOnClickListener { activity?.onBackPressed() }
         text_toolbar.text = categoryName
+        search_btn.visibility = View.VISIBLE
+        filter_btn.visibility = View.VISIBLE
+
         search_btn.setOnClickListener {
             back_btn.visibility = View.GONE
             text_toolbar.visibility = View.GONE

@@ -39,6 +39,9 @@ class MainDressingRoomFragment : BaseFragment() {
 
         dressing_back_ground_image.setImageDrawable(viewModel.currentBackgroundImage.value)
         activity!!.text_toolbar.visibility = View.GONE
+        activity!!.filter_btn.visibility = View.GONE
+        activity!!.search_btn.visibility = View.GONE
+        activity!!.back_btn.setOnClickListener { activity?.finish() }
 
         dressing_inventory.setOnClickListener {
             val inventoryFragment = InventoryFragment.newInstance()

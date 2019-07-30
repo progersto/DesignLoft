@@ -8,7 +8,13 @@ import android.transition.Slide
 import android.view.Gravity
 import com.designloft.R
 import com.designloft.base.BaseActivity
+import com.designloft.base.BaseFragment
 import com.designloft.ui.main.MainViewModel
+import com.designloft.ui.main.categories.CategoriesFragment
+import com.designloft.ui.main.contacts.ContactsFragment
+import com.designloft.ui.main.product.ProductFragment
+import com.designloft.ui.main.profile.ProfileFragment
+import kotlinx.android.synthetic.main.view_toolbar.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class DressingRoomActivity : BaseActivity() {
@@ -47,5 +53,28 @@ class DressingRoomActivity : BaseActivity() {
         mainDressingRoomFragment.sharedElementEnterTransition = changeBoundsTransition
 
         showFragment(mainDressingRoomFragment, R.id.dressing_room_container, MainDressingRoomFragment.TAG)
+
+        back_btn.setOnClickListener { finish() }
+    }
+
+    override fun onBackPressed() {
+//        val navigationFragment: BaseFragment? = navigationAdapter!!.getCurrentFragment()
+//
+//        if (navigationFragment is ContactsFragment) {
+//            finish()
+//        }
+//        if (navigationFragment is ProfileFragment) {
+//            val listFragments = supportFragmentManager.fragments.filter { frag -> frag.isVisible }
+//            val fragment = listFragments[listFragments.size - 1]
+//            if (fragment is ProductFragment) {
+//                super.onBackPressed()
+//            } else {
+//                finish()
+//            }
+//        }
+//        if (navigationFragment is CategoriesFragment) {
+//            super.onBackPressed()
+//        }
+        super.onBackPressed()
     }
 }

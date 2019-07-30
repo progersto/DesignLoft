@@ -41,13 +41,14 @@
     <string name="dressing_inventory">Инвентарь</string>
     <string name="dressing_catalog">Каталог</string>
     <string name="dressing_save">Сохранить</string>
+    <string name="dressing_favorite">Избранное</string>
+    <string name="dressing_my_decor">Мой декор</string>
 
     <string name="inventory_title">Инвентарь</string>
     <string name="inventory_sum">Общая сумма:</string>
     <string name="inventory_hint">Добавьте первые элементы дизайна, перейдя на вкладку "каталог"</string>
 
     <string name="catalog_detail">Детали</string>
-
 
 
 </resources>

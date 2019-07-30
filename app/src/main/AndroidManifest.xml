@@ -37,8 +37,10 @@
         </activity>
 
         <activity android:name=".ui.selectBackground.SelectBackgroungActivity"/>
-        <activity android:name=".ui.dressingRoom.DressingRoomActivity"/>
-        <activity android:name=".ui.dressingRoom.Dddd"/>
+        <activity
+                android:name=".ui.dressingRoom.DressingRoomActivity"
+                android:windowSoftInputMode="adjustResize"
+        />
 
         <provider
                 android:name="androidx.core.content.FileProvider"
